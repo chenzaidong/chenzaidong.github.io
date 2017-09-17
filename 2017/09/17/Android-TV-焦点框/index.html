@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="Android TＶ开发　焦点框@[android tv]  对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置 一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验 通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。动画最终状态是,焦点框从失去焦点的位置移动到获得焦">
+<meta name="description" content="对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置 一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验 通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。动画最终状态是,焦点框从失去焦点的位置移动到获得焦点的位置,控件放大,焦点框尺寸最后变为放大后的控件尺寸.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android TV 焦点框">
 <meta property="og:url" content="http://yoursite.com/2017/09/17/Android-TV-焦点框/index.html">
 <meta property="og:site_name" content="陈明日的博客">
-<meta property="og:description" content="Android TＶ开发　焦点框@[android tv]  对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置 一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验 通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。动画最终状态是,焦点框从失去焦点的位置移动到获得焦">
+<meta property="og:description" content="对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置 一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验 通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。动画最终状态是,焦点框从失去焦点的位置移动到获得焦点的位置,控件放大,焦点框尺寸最后变为放大后的控件尺寸.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/GIF.gif">
-<meta property="og:updated_time" content="2017-09-17T09:22:15.765Z">
+<meta property="og:updated_time" content="2017-09-17T09:47:09.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android TV 焦点框">
-<meta name="twitter:description" content="Android TＶ开发　焦点框@[android tv]  对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置 一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验 通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。动画最终状态是,焦点框从失去焦点的位置移动到获得焦">
+<meta name="twitter:description" content="对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置 一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验 通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。动画最终状态是,焦点框从失去焦点的位置移动到获得焦点的位置,控件放大,焦点框尺寸最后变为放大后的控件尺寸.">
 <meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/GIF.gif">
 
 
@@ -347,12 +347,12 @@
       
 
       
-        <h1 id="Android-TV开发-焦点框"><a href="#Android-TV开发-焦点框" class="headerlink" title="Android TＶ开发　焦点框"></a>Android TＶ开发　焦点框</h1><p>@[android tv]</p>
-<ol>
+        <ol>
 <li>对于TV或者投影设备来说说，各种事件的处理，主要依赖于遥控器，通过焦点框来显示焦点出现的位置</li>
 <li>一般可以通过响应事件来切换控件的背景（例：drawable/selector.xml），但是影响用户体验</li>
 <li>通过焦点框的动画效果，使用平移动画绘制焦点框的移动轨迹，并且焦点框随着控件的形状而变化。<br>动画最终状态是,焦点框从失去焦点的位置移动到获得焦点的位置,控件放大,焦点框尺寸最后变为放大后的控件尺寸.</li>
 </ol>
+<p><img src="http://osgun3ytd.bkt.clouddn.com/GIF.gif" alt="效果图"><br><a id="more"></a></p>
 <h3 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h3><ol>
 <li>焦点框位于布局最上层，当控件获取焦点后，焦点框移动到控件上方</li>
 <li>获取当前位置及大小</li>
@@ -365,7 +365,6 @@
 <p>主要在根布局中添加监听，不用对每个控件单独设置监听</p>
 <p>了解ViewTreeObserver ：<br><a href="http://blog.csdn.net/My_TrueLove/article/details/52305792" target="_blank" rel="external">解析 ViewTreeObserver 源码，体会观察者模式、Android消息传递（上）</a></p>
 <p>在runTranslateAnimation方法中，可以根据获取焦点控件不同，设置不同的缩放值</p>
-<p><img src="http://osgun3ytd.bkt.clouddn.com/GIF.gif" alt="效果图"></p>
 <p>文章博客地址<br>(<a href="http://blog.csdn.net/a503066623/article/details/74158300" target="_blank" rel="external">http://blog.csdn.net/a503066623/article/details/74158300</a>)</p>
 <p>github地址<br>(<a href="https://github.com/chenzaidong/FocusBorderViewDemo" target="_blank" rel="external">https://github.com/chenzaidong/FocusBorderViewDemo</a>)    </p>
 
@@ -388,22 +387,6 @@
       
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/09/17/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
       
 
       
@@ -480,7 +463,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -519,7 +502,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-TV开发-焦点框"><span class="nav-number">1.</span> <span class="nav-text">Android TＶ开发　焦点框</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路"><span class="nav-number">1.0.1.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义焦点框代码"><span class="nav-number">1.0.2.</span> <span class="nav-text">自定义焦点框代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity"><span class="nav-number">1.0.3.</span> <span class="nav-text">Activity</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计思路"><span class="nav-number">1.</span> <span class="nav-text">设计思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义焦点框代码"><span class="nav-number">2.</span> <span class="nav-text">自定义焦点框代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity"><span class="nav-number">3.</span> <span class="nav-text">Activity</span></a></li></ol></div>
             
 
           </div>
