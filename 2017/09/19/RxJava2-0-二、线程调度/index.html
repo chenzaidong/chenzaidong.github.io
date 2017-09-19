@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,RxJava," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="有人爱 有事做 有所期待">
-<meta property="og:type" content="website">
-<meta property="og:title" content="陈明日的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta name="keywords" content="Android,RxJava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava2.0  二、线程调度">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/RxJava2-0-二、线程调度/index.html">
 <meta property="og:site_name" content="陈明日的博客">
-<meta property="og:description" content="有人爱 有事做 有所期待">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-27af762b477dd586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-19T11:55:36.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="陈明日的博客">
-<meta name="twitter:description" content="有人爱 有事做 有所期待">
+<meta name="twitter:title" content="RxJava2.0  二、线程调度">
+<meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/RxJava2-0-二、线程调度/"/>
 
 
 
 
 
-  <title>归档 | 陈明日的博客</title>
+  <title>RxJava2.0  二、线程调度 | 陈明日的博客</title>
   
 
 
@@ -159,7 +161,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,259 +299,222 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/RxJava2-0-二、线程调度/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">RxJava2.0  二、线程调度</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T19:24:49+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 6 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
-      
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
 
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/09/19/RxJava2-0-二、线程调度/" class="leancloud_visitors" data-flag-title="RxJava2.0  二、线程调度">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/shell-命令/" itemprop="url">
-              
-                <span itemprop="name">shell 命令</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T23:34:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava-四、背压/" itemprop="url">
-              
-                <span itemprop="name">RxJava 四、背压</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:27:12+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-三、操作符/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 三、操作符</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:26:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-二、线程调度/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0  二、线程调度</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:24:49+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><img src="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg" alt="RxJava"><br><a id="more"></a><br>原文地址：<br><a href="http://www.jianshu.com/p/8818b98c44e2" target="_blank" rel="external">给初学者的RxJava2.0教程(二)</a></p>
+<p>还是以之前的例子, 两根水管:<br><img src="http://upload-images.jianshu.io/upload_images/1008453-27af762b477dd586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava"></p>
+<p>正常情况下, <code>上游</code>和<code>下游</code>是工作在同一个线程中的, 也就是说上游在哪个线程发事件, 下游就在哪个线程接收事件.</p>
+<p>比如我们在onCreate中打出当前线程的名字:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        Log.d(TAG, Thread.currentThread().getName());</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>结果:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">main</div></pre></td></tr></table></figure></p>
+<p>回到RxJava中, 当我们在主线程中去创建一个上游Observable来发送事件, 则这个上游默认就在主线程发送事件.</p>
+<p>当我们在主线程去创建一个下游Observer来接收事件, 则这个下游默认就在主线程中接收事件, 来看段代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span>                                                                                       </div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;                                            </div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);                                                        </div><div class="line">    setContentView(R.layout.activity_main);                                                     </div><div class="line"></div><div class="line">    Observable&lt;Integer&gt; observable = Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;   </div><div class="line">        <span class="meta">@Override</span>                                                                               </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;            </div><div class="line">            Log.d(TAG, <span class="string">"Observable thread is : "</span> + Thread.currentThread().getName());           </div><div class="line">            Log.d(TAG, <span class="string">"emit 1"</span>);                                                               </div><div class="line">            emitter.onNext(<span class="number">1</span>);                                                                  </div><div class="line">        &#125;                                                                                       </div><div class="line">    &#125;);                                                                                         </div><div class="line"></div><div class="line">    Consumer&lt;Integer&gt; consumer = <span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;                                      </div><div class="line">        <span class="meta">@Override</span>                                                                               </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;                                  </div><div class="line">            Log.d(TAG, <span class="string">"Observer thread is :"</span> + Thread.currentThread().getName());              </div><div class="line">            Log.d(TAG, <span class="string">"onNext: "</span> + integer);                                                   </div><div class="line">        &#125;                                                                                       </div><div class="line">    &#125;;                                                                                          </div><div class="line"></div><div class="line">    observable.subscribe(consumer);                                                             </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在主线程中分别创建上游和下游, 然后将他们连接在一起, 同时分别打印出它们所在的线程, 运行结果为:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">D/TAG: Observable thread is : main</div><div class="line">D/TAG: emit <span class="number">1</span>                     </div><div class="line">D/TAG: Observer thread is :main   </div><div class="line">D/TAG: onNext: <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>在RxJava中，主要记住两行代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">.subscribeOn(Schedulers.newThread())                                              </div><div class="line">.observeOn(AndroidSchedulers.mainThread())</div></pre></td></tr></table></figure>
+<p>简单的来说</p>
+<pre><code>subscribeOn() 指定的是上游发送事件的线程, 
+observeOn()指定的是下游接收事件的线程.
+</code></pre><p>多次指定上游的线程只有第一次指定的有效, 也就是说多次调用<code>subscribeOn()</code> 只有 <code>第一次</code>  的有效, 其余的会被忽略.</p>
+<p>多次指定下游的线程是可以的, 也就是说每调用一次<code>observeOn()</code> , <code>下游</code>的线程就会切换一次.</p>
+<p>在RxJava中, 已经内置了很多线程选项供我们选择, 例如有</p>
+<ul>
+<li>Schedulers.io() 代表io操作的线程, 通常用于网络,读写文件等io密集型的操作</li>
+<li>Schedulers.computation() 代表CPU计算密集型的操作, 例如需要大量计算的操作</li>
+<li>Schedulers.newThread() 代表一个常规的新线程</li>
+<li>AndroidSchedulers.mainThread() 代表Android的主线程</li>
+</ul>
+<p>这些内置的Scheduler已经足够满足我们开发的需求, 因此我们应该使用内置的这些选项, 在RxJava内部使用的是线程池来维护这些线程, 所有效率也比较高.</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-一、基础/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 一、基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:15:00+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/17/Android-TV-焦点框/" itemprop="url">
-              
-                <span itemprop="name">Android TV 焦点框</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-17T17:21:50+08:00"
-              content="2017-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/RxJava/" rel="tag"># RxJava</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/RxJava2-0-一、基础/" rel="next" title="RxJava2.0 一、基础">
+                <i class="fa fa-chevron-left"></i> RxJava2.0 一、基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/RxJava2-0-三、操作符/" rel="prev" title="RxJava2.0 三、操作符">
+                RxJava2.0 三、操作符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -557,6 +522,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -804,6 +775,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
     
   
 

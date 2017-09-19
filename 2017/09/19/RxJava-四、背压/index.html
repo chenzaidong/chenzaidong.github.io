@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,RxJava," />
 
 
 
@@ -95,16 +95,19 @@
 
 
 
-<meta name="description" content="有人爱 有事做 有所期待">
-<meta property="og:type" content="website">
-<meta property="og:title" content="陈明日的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta name="keywords" content="Android,RxJava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava 四、背压">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/RxJava-四、背压/index.html">
 <meta property="og:site_name" content="陈明日的博客">
-<meta property="og:description" content="有人爱 有事做 有所期待">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-785506a07f98d30a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3994917-21e4dcc1b5e3196a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-09-19T15:01:28.213Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="陈明日的博客">
-<meta name="twitter:description" content="有人爱 有事做 有所期待">
+<meta name="twitter:title" content="RxJava 四、背压">
+<meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
 
 
 
@@ -134,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/RxJava-四、背压/"/>
 
 
 
 
 
-  <title>归档 | 陈明日的博客</title>
+  <title>RxJava 四、背压 | 陈明日的博客</title>
   
 
 
@@ -159,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,259 +300,248 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/RxJava-四、背压/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">RxJava 四、背压</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T19:27:12+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 6 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
-      
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
 
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/09/19/RxJava-四、背压/" class="leancloud_visitors" data-flag-title="RxJava 四、背压">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/shell-命令/" itemprop="url">
-              
-                <span itemprop="name">shell 命令</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T23:34:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava-四、背压/" itemprop="url">
-              
-                <span itemprop="name">RxJava 四、背压</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:27:12+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-三、操作符/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 三、操作符</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:26:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-二、线程调度/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0  二、线程调度</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:24:49+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><img src="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg" alt="RxJava"><br><a id="more"></a></p>
+<h2 id="Backpressure-背压"><a href="#Backpressure-背压" class="headerlink" title="Backpressure(背压)"></a>Backpressure(背压)</h2><p>原文地址:<br><a href="http://www.jianshu.com/p/bb58571cdb64" target="_blank" rel="external">给初学者的RxJava2.0教程(四)</a></p>
+<ul>
+<li>背压是指在异步场景中，被观察者发送事件速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。</li>
+<li>背压是流速控制的一种策略。</li>
+</ul>
+<p>比如情形一：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;                            </div><div class="line">    <span class="meta">@Override</span>                                                                       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;    </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; ; i++) &#123;    <span class="comment">//无限循环发事件                                                     </span></div><div class="line">            emitter.onNext(i);                                                      </div><div class="line">        &#125;                                                                           </div><div class="line">    &#125;                                                                               </div><div class="line">&#125;).subscribeOn(Schedulers.io())                                                    </div><div class="line">        .observeOn(AndroidSchedulers.mainThread())                                  </div><div class="line">        .subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;                                        </div><div class="line">            <span class="meta">@Override</span>                                                               </div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;                  </div><div class="line">                Thread.sleep(<span class="number">2000</span>);                                                 </div><div class="line">                Log.d(TAG, <span class="string">""</span> + integer);                                           </div><div class="line">            &#125;                                                                       </div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<p>在上述代码中，Observable发射速度远远大于Observer的处理速度，导致OOM出现</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1008453-785506a07f98d30a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="异步"></p>
+<h2 id="Flowable-和-Subscriber"><a href="#Flowable-和-Subscriber" class="headerlink" title="Flowable 和 Subscriber"></a>Flowable 和 Subscriber</h2><p>所以在RxJava2.0 中，出现了两种观察者模式：</p>
+<ul>
+<li>Observable ( 被观察者 ) / Observer ( 观察者 )</li>
+<li>Flowable （被观察者）/ Subscriber （观察者）</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/3994917-21e4dcc1b5e3196a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava2.0"></p>
+<p>在 RxJava 2.x 中，<code>Observable</code> 用于订阅 <code>Observer</code>，不再支持背压（1.x 中可以使用背压策略），而 <code>Flowable</code> 用于订阅 <code>Subscriber</code>， 是支持背压（Backpressure）的。</p>
+<p>之前我们所的上游和下游分别是Observable和Observer, 这次不一样的是上游变成了Flowable, 下游变成了Subscriber, 但是水管之间的连接还是通过subscribe(), 我们来看看最基本的用法吧:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">Flowable&lt;Integer&gt; upstream = Flowable.create(<span class="keyword">new</span> FlowableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(FlowableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                Log.d(TAG, <span class="string">"emit 1"</span>);</div><div class="line">                emitter.onNext(<span class="number">1</span>);</div><div class="line">                Log.d(TAG, <span class="string">"emit 2"</span>);</div><div class="line">                emitter.onNext(<span class="number">2</span>);</div><div class="line">                Log.d(TAG, <span class="string">"emit 3"</span>);</div><div class="line">                emitter.onNext(<span class="number">3</span>);</div><div class="line">                Log.d(TAG, <span class="string">"emit complete"</span>);</div><div class="line">                emitter.onComplete();</div><div class="line">            &#125;</div><div class="line">        &#125;, BackpressureStrategy.ERROR); <span class="comment">//增加了一个参数</span></div><div class="line"></div><div class="line">        Subscriber&lt;Integer&gt; downstream = <span class="keyword">new</span> Subscriber&lt;Integer&gt;() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Subscription s)</span> </span>&#123;</div><div class="line">                Log.d(TAG, <span class="string">"onSubscribe"</span>);</div><div class="line">                s.request(Long.MAX_VALUE);  <span class="comment">//注意这句代码</span></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Integer integer)</span> </span>&#123;</div><div class="line">                Log.d(TAG, <span class="string">"onNext: "</span> + integer);</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">                 Log.w(TAG, <span class="string">"onError: "</span>, t);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">                Log.d(TAG, <span class="string">"onComplete"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        upstream.subscribe(downstream);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>除了类名不同外，还要注意：</p>
+</blockquote>
+<ul>
+<li><p>Flowable.create()方法添加了一个参数  BackpressureStrategy.ERROR</p>
+<p>  这种方式会在出现上下游流速不均衡的时候直接抛出一个异常,这个异常就是著名的MissingBackpressureException.</p>
+</li>
+<li><p>Subscriber的onSubscribe()方法中，调用了s.request(Long.MAX_VALUE)</p>
+<p>  告知上游的下游的处理能力</p>
+</li>
+</ul>
+<h2 id="响应式拉取（reactive-pull）"><a href="#响应式拉取（reactive-pull）" class="headerlink" title="响应式拉取（reactive pull）"></a>响应式拉取（reactive pull）</h2><h3 id="在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。"><a href="#在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。" class="headerlink" title="在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。"></a>在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。</h3><h3 id="背压策略的一个前提是异步环境，也就是说，被观察者和观察者处在不同的线程环境中。"><a href="#背压策略的一个前提是异步环境，也就是说，被观察者和观察者处在不同的线程环境中。" class="headerlink" title="背压策略的一个前提是异步环境，也就是说，被观察者和观察者处在不同的线程环境中。"></a>背压策略的一个前提是<code>异步</code>环境，也就是说，被观察者和观察者处在不同的线程环境中。</h3><p>如果<code>上游</code>和<code>下游</code>,<code>同在一个线程中</code>，<code>下游</code>没有调用调用了s.request(Long.MAX_VALUE)方法，<code>上游</code>就认为<code>下游</code>没有处理事件的能力, 而这又是一个同步的订阅, 既然<code>下游</code>处理不了, 那<code>上游</code>不可能一直等待吧, 如果是这样, 万一这两根水管工作在主线程里, 界面不就卡死了吗, 因此只能抛个异常来提醒我们. 那如何解决这种情况呢, 很简单啦, <code>下游</code>直接调用request(Long.MAX_VALUE)就行了, 或者根据<code>上游</code>发送事件的数量来request就行了, 比如这里request(3)就可以了.</p>
+<p>上下游<code>没有工作在同一个线程时</code>, 上游却正确的发送了所有的事件呢? 这是因为在Flowable里默认有一个大小为<code>128</code>的水缸, 当上下游工作在不同的线程中时, 上游就会先把事件发送到这个水缸中, 因此, 下游虽然没有调用request, 但是上游在水缸中保存着这些事件, 只有当下游调用request时, 才从水缸里取出事件发给下游.</p>
+<p>除了BackpressureStrategy.ERROR<br>还有另外BackpressureStrategy.BUFFER、BackpressureStrategy.DROP和BackpressureStrategy.LATEST</p>
+<ol>
+<li><p>BackpressureStrategy.BUFFER</p>
+<p> 给缓存区换一个大的缓存，但是和Observable 一样，如果下游处理不过来，一样会出现OOM</p>
+</li>
+<li><p>BackpressureStrategy.DROP</p>
+<p> FLowable内部的默认的水缸大小为128, 因此, 它刚开始肯定会把0-127这128个事件保存起来, 然后丢弃掉其余的事件, 当我们request(128)的时候,下游便会处理掉这128个事件, 那么上游水缸中又会重新装进新的128个事件, 以此类推</p>
+</li>
+<li><p>BackpressureStrategy.LATEST</p>
+<p> 和BackpressureStrategy.DROP类似，保存128个事件，多余的丢弃，但是能获得最后一个事件</p>
+</li>
+</ol>
+<p>有些FLowable并不是我自己创建的, 该怎么办呢? 比如RxJava中的interval操作符，RxJava给我们提供了其他的方法:</p>
+<ul>
+<li>onBackpressureBuffer()</li>
+<li>onBackpressureDrop()</li>
+<li>onBackpressureLatest()</li>
+</ul>
+<p>比如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">Flowable.interval(<span class="number">1</span>, TimeUnit.MICROSECONDS)</div><div class="line">                .onBackpressureDrop()  <span class="comment">//加上背压策略</span></div><div class="line">                .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                .subscribe(<span class="keyword">new</span> Subscriber&lt;Long&gt;() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Subscription s)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onSubscribe"</span>);</div><div class="line">                        mSubscription = s;</div><div class="line">                        s.request(Long.MAX_VALUE);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(Long aLong)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onNext: "</span> + aLong);</div><div class="line">                        <span class="keyword">try</span> &#123;</div><div class="line">                            Thread.sleep(<span class="number">1000</span>);</div><div class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">                        Log.w(TAG, <span class="string">"onError: "</span>, t);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onComplete"</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-一、基础/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 一、基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:15:00+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/17/Android-TV-焦点框/" itemprop="url">
-              
-                <span itemprop="name">Android TV 焦点框</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-17T17:21:50+08:00"
-              content="2017-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/RxJava/" rel="tag"># RxJava</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/RxJava2-0-三、操作符/" rel="next" title="RxJava2.0 三、操作符">
+                <i class="fa fa-chevron-left"></i> RxJava2.0 三、操作符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/shell-命令/" rel="prev" title="shell 命令">
+                shell 命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -557,6 +549,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -577,8 +575,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -651,6 +658,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Backpressure-背压"><span class="nav-number">1.</span> <span class="nav-text">Backpressure(背压)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flowable-和-Subscriber"><span class="nav-number">2.</span> <span class="nav-text">Flowable 和 Subscriber</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式拉取（reactive-pull）"><span class="nav-number">3.</span> <span class="nav-text">响应式拉取（reactive pull）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。"><span class="nav-number">3.1.</span> <span class="nav-text">在RxJava的观察者模型中，被观察者是主动的推送数据给观察者，观察者是被动接收的。而响应式拉取则反过来，观察者主动从被观察者那里去拉取数据，而被观察者变成被动的等待通知再发送数据。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背压策略的一个前提是异步环境，也就是说，被观察者和观察者处在不同的线程环境中。"><span class="nav-number">3.2.</span> <span class="nav-text">背压策略的一个前提是异步环境，也就是说，被观察者和观察者处在不同的线程环境中。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -804,6 +827,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
     
   
 

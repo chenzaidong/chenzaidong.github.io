@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,RxJava," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="keywords" content="Android,RxJava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava2.0 三、操作符">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/RxJava2-0-三、操作符/index.html">
+<meta property="og:site_name" content="陈明日的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-2a068dc6b726568a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-659c8c548805fdcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-2ccce5cf25e8023a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-e11e9d75b1775e4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-08f91b634493eae0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://static.zybuluo.com/maplejaw/1a7gi8os6u4kgk7aahzmj1d0/image_1arcl6d0a1iej60e6ccp48qic9.png">
+<meta property="og:updated_time" content="2017-09-19T15:31:48.272Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava2.0 三、操作符">
+<meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/RxJava2-0-三、操作符/"/>
+
+
+
+
+
+  <title>RxJava2.0 三、操作符 | 陈明日的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">陈明日的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你今天努力了么</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/RxJava2-0-三、操作符/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RxJava2.0 三、操作符</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T19:26:46+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/19/RxJava2-0-三、操作符/" class="leancloud_visitors" data-flag-title="RxJava2.0 三、操作符">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg" alt="RxJava"><br><a id="more"></a><br>原文地址:<br><a href="http://www.jianshu.com/p/128e662906af" target="_blank" rel="external">给初学者的RxJava2.0教程(三)</a></p>
+<h1 id="RxJava事件传递过程中的那些鬼斧神工的操作"><a href="#RxJava事件传递过程中的那些鬼斧神工的操作" class="headerlink" title="RxJava事件传递过程中的那些鬼斧神工的操作"></a>RxJava事件传递过程中的那些鬼斧神工的操作</h1><h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>map是RxJava中最简单的一个变换操作符了, 它的作用就是对上游发送的每一个事件应用一个函数, 使得每一个事件都按照指定的函数去变化. 用事件图表示如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1008453-2a068dc6b726568a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="map"></p>
+<p>图中map中的函数作用是将圆形事件转换为矩形事件, 从而导致下游接收到的事件就变为了矩形.用代码来表示这个例子就是:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                emitter.onNext(<span class="number">1</span>);</div><div class="line">                emitter.onNext(<span class="number">2</span>);</div><div class="line">                emitter.onNext(<span class="number">3</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;).map(<span class="keyword">new</span> Function&lt;Integer, String&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="string">"This is result "</span> + integer;</div><div class="line">            &#125;</div><div class="line">        &#125;).subscribe(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(String s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                Log.d(TAG, s);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<p>在上游我们发送的是数字类型, 而在下游我们接收的是String类型, 中间起转换作用的就是map操作符, 运行结果为:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">D/TAG: This is result <span class="number">1</span> </div><div class="line">D/TAG: This is result <span class="number">2</span> </div><div class="line">D/TAG: This is result <span class="number">3</span></div></pre></td></tr></table></figure></p>
+<h2 id="FlatMap"><a href="#FlatMap" class="headerlink" title="FlatMap"></a>FlatMap</h2><p>flatMap是一个非常强大的操作符, 先用一个比较难懂的概念说明一下:</p>
+<p>FlatMap将一个发送事件的上游Observable变换为多个发送事件的Observables，然后将它们发射的事件合并后放进一个单独的Observable里.</p>
+<p>这句话比较难以理解, 我们先通俗易懂的图片来详细的讲解一下, 首先先来看看整体的一个图片:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1008453-659c8c548805fdcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flatMap"></p>
+<p>先看看上游, 上游发送了三个事件, 分别是1,2,3, 注意它们的颜色.</p>
+<p>中间flatMap的作用是将圆形的事件转换为一个发送矩形事件和三角形事件的新的上游Observable.</p>
+<p>还是不能理解? 别急, 再来看看分解动作:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1008453-2ccce5cf25e8023a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flatmap"></p>
+<p>上游每发送一个事件, <code>flatMap</code>都将创建一个新的水管, 然后发送转换之后的新的事件, 下游接收到的就是这些新的水管发送的数据. 这里需要注意的是, <code>flatMap</code>并不保证事件的顺序, 也就是图中所看到的, 并不是事件1就在事件2的前面. 如果需要保证顺序则需要使用<code>concatMap</code>.</p>
+<h4 id="map与flatMap的区别"><a href="#map与flatMap的区别" class="headerlink" title="map与flatMap的区别"></a>map与flatMap的区别</h4><p>map 是在一个 item 被发射之后，到达 map 处经过转换变成另一个 item ，然后继续往下走<br>flapMap 是 item 被发射之后，到达 flatMap 处经过转换变成一个 Observable ，而这个 Observable 并不会直接被发射出去，而是会立即被激活，然后把它发射出的每个 item 都传入流中，再继续走下去。<br>所以 flatMap 和 map 有两个区别：</p>
+<ul>
+<li>经过 Observable 的转换，相当于重新开了一个异步的流；</li>
+<li>item 被分散了，个数发生了变化。</li>
+</ul>
+<h2 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h2><p><code>Zip</code>通过一个函数将多个Observable发送的事件结合到一起，然后发送这些组合到一起的事件. 它按照严格的顺序应用这个函数。它只发射与发射数据项最少的那个Observable一样多的数据。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1008453-e11e9d75b1775e4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="zip"></p>
+<p>从这个图中可以看见, 这次上游和以往不同的是, 我们有两根水管了.</p>
+<p>其中一根水管负责发送<code>圆形事件</code> , 另外一根水管负责发送<code>三角形事件</code> , 通过Zip操作符, 使得<code>圆形事</code>件 和<code>三角形事件</code> 合并为了一<code>个矩形事件</code> .</p>
+<p>下面我们再来看看分解动作：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1008453-08f91b634493eae0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="zip"></p>
+<p>通过分解动作我们可以看出:</p>
+<ul>
+<li>组合的过程是分别从 两根水管里各取出一个事件 来进行组合, 并且一个事件只能被使用一次, 组合的顺序是严格按照事件发送的顺利 来进行的, 也就是说不会出现圆形1 事件和三角形B 事件进行合并, 也不可能出现圆形2 和三角形A 进行合并的情况.</li>
+<li>最终下游收到的事件数量 是和上游中发送事件最少的那一根水管的事件数量 相同. 这个也很好理解, 因为是从每一根水管 里取一个事件来进行合并, 最少的 那个肯定就最先取完 , 这个时候其他的水管尽管还有事件 , 但是已经没有足够的事件来组合了, 因此下游就不会收到剩余的事件了.</li>
+</ul>
+<p>分析了大概的原理, 我们还是劳逸结合, 先来看看实际中的代码怎么写吧:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; observable1 = Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;            </div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;Integer&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;                      </div><div class="line">        Log.d(TAG, <span class="string">"emit 1"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="number">1</span>);                                                                            </div><div class="line">        Log.d(TAG, <span class="string">"emit 2"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="number">2</span>);                                                                            </div><div class="line">        Log.d(TAG, <span class="string">"emit 3"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="number">3</span>);                                                                            </div><div class="line">        Log.d(TAG, <span class="string">"emit 4"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="number">4</span>);                                                                            </div><div class="line">        Log.d(TAG, <span class="string">"emit complete1"</span>);                                                                 </div><div class="line">        emitter.onComplete();                                                                         </div><div class="line">    &#125;                                                                                                 </div><div class="line">&#125;);                                                                   </div><div class="line"></div><div class="line">Observable&lt;String&gt; observable2 = Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;String&gt;() &#123;              </div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(ObservableEmitter&lt;String&gt; emitter)</span> <span class="keyword">throws</span> Exception </span>&#123;                       </div><div class="line">        Log.d(TAG, <span class="string">"emit A"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="string">"A"</span>);                                                                          </div><div class="line">        Log.d(TAG, <span class="string">"emit B"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="string">"B"</span>);                                                                          </div><div class="line">        Log.d(TAG, <span class="string">"emit C"</span>);                                                                         </div><div class="line">        emitter.onNext(<span class="string">"C"</span>);                                                                          </div><div class="line">        Log.d(TAG, <span class="string">"emit complete2"</span>);                                                                 </div><div class="line">        emitter.onComplete();                                                                         </div><div class="line">    &#125;                                                                                                 </div><div class="line">&#125;);                                                                     </div><div class="line"></div><div class="line">Observable.zip(observable1, observable2, <span class="keyword">new</span> BiFunction&lt;Integer, String, String&gt;() &#123;                  </div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(Integer integer, String s)</span> <span class="keyword">throws</span> Exception </span>&#123;                                 </div><div class="line">        <span class="keyword">return</span> integer + s;                                                                           </div><div class="line">    &#125;                                                                                                 </div><div class="line">&#125;).subscribe(<span class="keyword">new</span> Observer&lt;String&gt;() &#123;                       </div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(Disposable d)</span> </span>&#123;                                                           </div><div class="line">        Log.d(TAG, <span class="string">"onSubscribe"</span>);                                                                    </div><div class="line">    &#125;                                                                                                 </div><div class="line"></div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(String value)</span> </span>&#123;                                                                </div><div class="line">        Log.d(TAG, <span class="string">"onNext: "</span> + value);                                                               </div><div class="line">    &#125;                                                                                                 </div><div class="line"></div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;                                                                </div><div class="line">        Log.d(TAG, <span class="string">"onError"</span>);                                                                        </div><div class="line">    &#125;                                                                                                 </div><div class="line"></div><div class="line">    <span class="meta">@Override</span>                                                                                         </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;                                                                        </div><div class="line">        Log.d(TAG, <span class="string">"onComplete"</span>);                                                                     </div><div class="line">    &#125;                                                                                                 </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>我们分别创建了两个上游水管, 一个发送1,2,3,4,Complete, 另一个发送A,B,C,Complete, 接着用Zip把发出的事件组合, 来看看运行结果吧:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">D/TAG: onSubscribe     </div><div class="line">D/TAG: emit <span class="number">1</span>          </div><div class="line">D/TAG: emit <span class="number">2</span>          </div><div class="line">D/TAG: emit <span class="number">3</span>          </div><div class="line">D/TAG: emit <span class="number">4</span>          </div><div class="line">D/TAG: emit complete1  </div><div class="line">D/TAG: emit A          </div><div class="line">D/TAG: onNext: <span class="number">1</span>A      </div><div class="line">D/TAG: emit B          </div><div class="line">D/TAG: onNext: <span class="number">2</span>B      </div><div class="line">D/TAG: emit C          </div><div class="line">D/TAG: onNext: <span class="number">3</span>C      </div><div class="line">D/TAG: emit complete2  </div><div class="line">D/TAG: onComplete</div></pre></td></tr></table></figure>
+<p>学习了Zip的基本用法, 那么它在Android有什么用呢, 其实很多场景都可以用到Zip. 举个例子.</p>
+<p>比如一个界面需要展示用户的一些信息, 而这些信息分别要从两个服务器接口中获取, 而只有当两个都获取到了之后才能进行展示, 这个时候就可以用Zip了</p>
+<h1 id="更多操作符可以查看："><a href="#更多操作符可以查看：" class="headerlink" title="更多操作符可以查看："></a>更多操作符可以查看：</h1><p><a href="http://blog.csdn.net/maplejaw_/article/details/52396175" target="_blank" rel="external">Rxjava操作符大全</a></p>
+<h2 id="常用操作符"><a href="#常用操作符" class="headerlink" title="常用操作符"></a>常用操作符</h2><h3 id="from"><a href="#from" class="headerlink" title="from"></a>from</h3><p> 将一个Iterable, 一个Future, 或者一个数组，内部通过代理的方式转换成一个Observable。Future转换为OnSubscribe是通过OnSubscribeToObservableFuture进行的，Iterable转换通过OnSubscribeFromIterable进行。数组通过OnSubscribeFromArray转换。 </p>
+<p> <img src="http://static.zybuluo.com/maplejaw/1a7gi8os6u4kgk7aahzmj1d0/image_1arcl6d0a1iej60e6ccp48qic9.png" alt="from的内部实现"></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable.from(futrue)</div><div class="line">           .subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</div><div class="line">     <span class="meta">@Override</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</div><div class="line"></div><div class="line">     &#125;</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+<h3 id="just"><a href="#just" class="headerlink" title="just"></a>just</h3><p> 将一个或多个对象转换成发射这个或这些对象的一个Observable。如果是单个对象，内部创建的是ScalarSynchronousObservable对象。如果是多个对象，则是调用了from方法创建。</p>
+<h3 id="empty"><a href="#empty" class="headerlink" title="empty"></a>empty</h3><p> 创建一个什么都不做直接通知完成的Observable<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable observable1=Observable.empty();<span class="comment">//直接调用onCompleted。</span></div></pre></td></tr></table></figure></p>
+<h3 id="error"><a href="#error" class="headerlink" title="error"></a>error</h3><p>  创建一个什么都不做直接通知错误的Observable</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable observable2=Observable.error(<span class="keyword">new</span> RuntimeException());<span class="comment">//直接调用onError。这里可以自定义异常</span></div></pre></td></tr></table></figure>
+<h3 id="never"><a href="#never" class="headerlink" title="never"></a>never</h3><p> 创建一个什么都不做的Observable<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable observable3=Observable.never();<span class="comment">//啥都不做</span></div></pre></td></tr></table></figure></p>
+<h3 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h3><p> 创建一个在给定的延时之后发射数据项为0的Observable<long>,内部通过OnSubscribeTimerOnce工作<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Observable.timer(<span class="number">1000</span>,TimeUnit.MILLISECONDS)</div><div class="line">           .subscribe(<span class="keyword">new</span> Action1&lt;Long&gt;() &#123;</div><div class="line">               <span class="meta">@Override</span></div><div class="line">               <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Long aLong)</span> </span>&#123;</div><div class="line">                   Log.d(<span class="string">"JG"</span>,aLong.toString()); <span class="comment">// 0</span></div><div class="line">               &#125;</div><div class="line">           &#125;);</div></pre></td></tr></table></figure></long></p>
+<h3 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h3><p>创建一个按照给定的时间间隔发射从0开始的整数序列的Observable<long>，内部通过OnSubscribeTimerPeriodically工作。</long></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Observable.interval(<span class="number">1</span>, TimeUnit.SECONDS)</div><div class="line">          .subscribe(<span class="keyword">new</span> Action1&lt;Long&gt;() &#123;</div><div class="line">              <span class="meta">@Override</span></div><div class="line">              <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Long aLong)</span> </span>&#123;</div><div class="line">                   <span class="comment">//每隔1秒发送数据项，从0开始计数</span></div><div class="line">                   <span class="comment">//0,1,2,3....</span></div><div class="line">              &#125;</div><div class="line">          &#125;);</div></pre></td></tr></table></figure>
+<h3 id="range"><a href="#range" class="headerlink" title="range"></a>range</h3><p>创建一个发射指定范围的整数序列的Observable<integer></integer></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable.range(<span class="number">2</span>,<span class="number">5</span>).subscribe(<span class="keyword">new</span> Action1&lt;Integer&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Integer integer)</span> </span>&#123;</div><div class="line">          Log.d(<span class="string">"TAG"</span>,integer.toString());<span class="comment">// 2,3,4,5,6 从2开始发射5个数据</span></div><div class="line">      &#125;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<h3 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h3><p>只有当订阅者订阅才创建Observable，为每个订阅创建一个新的Observable。内部通过OnSubscribeDefer在订阅时调用Func0创建Observable。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Observable.defer(<span class="keyword">new</span> Func0&lt;Observable&lt;String&gt;&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> Observable&lt;String&gt; <span class="title">call</span><span class="params">()</span> </span>&#123;</div><div class="line">          <span class="keyword">return</span> Observable.just(<span class="string">"hello"</span>);</div><div class="line">      &#125;</div><div class="line">  &#125;).subscribe(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">          Log.d(<span class="string">"JG"</span>,s);</div><div class="line">      &#125;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="合并操作"><a href="#合并操作" class="headerlink" title="合并操作"></a>合并操作</h2><h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><p>按顺序连接多个Observables。</p>
+<blockquote>
+<p>需要注意的是Observable.concat(a,b)等价于a.concatWith(b)。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable&lt;Integer&gt; observable1=Observable.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</div><div class="line">Observable&lt;Integer&gt;  observable2=Observable.just(<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</div><div class="line"></div><div class="line">Observable.concat(observable1,observable2)</div><div class="line">            .subscribe(item-&gt;Log.d(<span class="string">"JG"</span>,item.toString()));<span class="comment">//1,2,3,4,4,5,6</span></div></pre></td></tr></table></figure>
+<h3 id="startWith"><a href="#startWith" class="headerlink" title="startWith"></a>startWith</h3><p>在数据序列的开头增加一项数据。startWith的内部也是调用了concat<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</div><div class="line">            .startWith(<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>)</div><div class="line">    .subscribe(item-&gt;Log.d(<span class="string">"JG"</span>,item.toString()));<span class="comment">//6,7,8,1,2,3,4,5</span></div></pre></td></tr></table></figure></p>
+<h3 id="merge操作符"><a href="#merge操作符" class="headerlink" title="merge操作符"></a>merge操作符</h3><ul>
+<li>可用于两个任务并发进行，全部处理完毕之后在更新数据</li>
+<li>将多个Observable合并为一个。不同于concat，merge不是按照添加顺序连接，而是按照时间线来连接。其中mergeDelayError将异常延迟到其它没有错误的Observable发送完毕后才发射。而merge则是一遇到异常将停止发射数据，发送onError通知。 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Observable.merge(obs1,obs2)。。。。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="过滤操作"><a href="#过滤操作" class="headerlink" title="过滤操作"></a>过滤操作</h2><h3 id="filter-过滤"><a href="#filter-过滤" class="headerlink" title="filter 过滤"></a>filter 过滤</h3><p>把不符合条件的过滤掉,留下符合条件的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">.filter(<span class="keyword">new</span> Func1&lt;String, Boolean&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        <span class="comment">//包含a的留下</span></div><div class="line">        <span class="keyword">return</span> s.contains(<span class="string">"a"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="ofType"><a href="#ofType" class="headerlink" title="ofType"></a>ofType</h3><p>过滤指定类型的数据，与filter类似，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">1</span>,<span class="number">2</span>,<span class="string">"3"</span>)</div><div class="line">            .ofType(Integer.class)</div><div class="line">            .subscribe(item -&gt; Log.d(<span class="string">"JG"</span>,item.toString()));</div></pre></td></tr></table></figure></p>
+<h3 id="take提取操作符"><a href="#take提取操作符" class="headerlink" title="take提取操作符"></a>take提取操作符</h3><p>只发射开始的N项数据或者一定时间内的数据。内部通过OperatorTake和OperatorTakeTimed过滤数据。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</div><div class="line">          .take(<span class="number">3</span>)<span class="comment">//发射前三个数据项</span></div><div class="line">          .take(<span class="number">100</span>, TimeUnit.MILLISECONDS)<span class="comment">//发射100ms内的数据</span></div></pre></td></tr></table></figure></p>
+<h3 id="takeLast"><a href="#takeLast" class="headerlink" title="takeLast"></a>takeLast</h3><ul>
+<li>只发射最后的N项数据或者一定时间内的数据。内部通过OperatorTakeLast和OperatorTakeLastTimed过滤数据。</li>
+<li>takeLastBuffer和takeLast类似，不同点在于takeLastBuffer会收集成List后发射。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</div><div class="line">           .takeLast(<span class="number">3</span>)</div><div class="line">           .subscribe(integer -&gt; Log.d(<span class="string">"JG"</span>,integer.toString()));<span class="comment">//4,5,6</span></div></pre></td></tr></table></figure>
+<h3 id="first-firstOrDefault"><a href="#first-firstOrDefault" class="headerlink" title="first/firstOrDefault"></a>first/firstOrDefault</h3><p>只发射第一项（或者满足某个条件的第一项）数据，可以指定默认值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</div><div class="line">           .first()</div><div class="line">           .subscribe(integer -&gt; Log.d(<span class="string">"JG"</span>,integer.toString()));<span class="comment">//3</span></div><div class="line"></div><div class="line">   Observable.just(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</div><div class="line">              .first(<span class="keyword">new</span> Func1&lt;Integer, Boolean&gt;() &#123;</div><div class="line">                  <span class="meta">@Override</span></div><div class="line">                  <span class="function"><span class="keyword">public</span> Boolean <span class="title">call</span><span class="params">(Integer integer)</span> </span>&#123;</div><div class="line">                      <span class="keyword">return</span> integer&gt;<span class="number">3</span>;</div><div class="line">                  &#125;</div><div class="line">              &#125;) .subscribe(integer -&gt; Log.d(<span class="string">"JG"</span>,integer.toString()));<span class="comment">//4</span></div></pre></td></tr></table></figure></p>
+<h3 id="last-lastOrDefault"><a href="#last-lastOrDefault" class="headerlink" title="last/lastOrDefault"></a>last/lastOrDefault</h3><p>只发射最后一项（或者满足某个条件的最后一项）数据，可以指定默认值。</p>
+<h3 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h3><p>跳过开始的N项数据或者一定时间内的数据。内部通过OperatorSkip和OperatorSkipTimed实现过滤。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</div><div class="line">              .skip(<span class="number">1</span>)</div><div class="line">           .subscribe(integer -&gt; Log.d(<span class="string">"JG"</span>,integer.toString()));<span class="comment">//4,5,6</span></div></pre></td></tr></table></figure>
+<h3 id="skipLast"><a href="#skipLast" class="headerlink" title="skipLast"></a>skipLast</h3><p>跳过最后的N项数据或者一定时间内的数据。内部通过OperatorSkipLast和OperatorSkipLastTimed实现过滤。</p>
+<h3 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h3><p>过滤重复数据，内部通过OperatorDistinct实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span>)</div><div class="line">       .distinct()</div><div class="line">      .subscribe(item-&gt;Log.d(<span class="string">"JG"</span>,item.toString())); <span class="comment">//3,4,5,6,9</span></div></pre></td></tr></table></figure></p>
+<h3 id="Map-1"><a href="#Map-1" class="headerlink" title="Map"></a>Map</h3><p>一种转换操作符，在call方法中，将T类型转换成E类型返回。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  .map(<span class="keyword">new</span> Func1&lt;T, E&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">call</span><span class="params">(T)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> E;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="flatmap操作"><a href="#flatmap操作" class="headerlink" title="flatmap操作"></a>flatmap操作</h3><p>将每个Observable产生的事件里的信息再包装成新的Observable传递出来</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Observable.from(getSchoolClass())</div><div class="line">               .flatMap(<span class="keyword">new</span> Func1&lt;SchoolClass, Observable&lt;Student&gt;&gt;() &#123;</div><div class="line">                   <span class="meta">@Override</span></div><div class="line">                   <span class="function"><span class="keyword">public</span> Observable&lt;Student&gt; <span class="title">call</span><span class="params">(SchoolClass schoolClass)</span> </span>&#123;</div><div class="line">                       <span class="comment">//将Student列表使用from方法一个一个发出去</span></div><div class="line">                       <span class="keyword">return</span> Observable.from(schoolClass.getStudents());</div><div class="line">                   &#125;</div><div class="line">               &#125;)</div><div class="line">               .subscribe(<span class="keyword">new</span> Action1&lt;Student&gt;() &#123;</div><div class="line">                   <span class="meta">@Override</span></div><div class="line">                   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Student student)</span> </span>&#123;</div><div class="line">                       mText.append(<span class="string">"打印单个学生信息：\n"</span>);</div><div class="line">                       mText.append(<span class="string">"name:"</span>+student.name+<span class="string">"    age: "</span>+student.age+<span class="string">"\n"</span>);</div><div class="line">                   &#125;</div><div class="line">               &#125;);</div></pre></td></tr></table></figure>
+<h3 id="map与flatMap的区别-1"><a href="#map与flatMap的区别-1" class="headerlink" title="map与flatMap的区别"></a>map与flatMap的区别</h3><ul>
+<li>map 是在一个 item 被发射之后，到达 map 处经过转换变成另一个 item ，然后继续往下走</li>
+<li>flapMap 是 item 被发射之后，到达 flatMap 处经过转换变成一个 Observable ，而这个 Observable 并不会直接被发射出去，而是会立即被激活，然后把它发射出的每个 item 都传入流中，再继续走下去。</li>
+</ul>
+<p>所以 flatMap 和 map 有两个区别：</p>
+<ol>
+<li>经过 Observable 的转换，相当于重新开了一个异步的流；</li>
+<li>item 被分散了，个数发生了变化。</li>
+</ol>
+<blockquote>
+<p>两个被观察者都调用onCompleted后，才会执行观察者的onCompleted</p>
+</blockquote>
+<h3 id="toSortedList排序操作符"><a href="#toSortedList排序操作符" class="headerlink" title="toSortedList排序操作符"></a>toSortedList排序操作符</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Observable.from(words)</div><div class="line">                 .toSortedList()</div><div class="line">                  .flatMap(<span class="keyword">new</span> Func1&lt;List&lt;Integer&gt;, Observable&lt;Integer&gt;&gt;() &#123;</div><div class="line">                      <span class="meta">@Override</span></div><div class="line">                      <span class="function"><span class="keyword">public</span> Observable&lt;Integer&gt; <span class="title">call</span><span class="params">(List&lt;Integer&gt; strings)</span> </span>&#123;</div><div class="line">                          <span class="keyword">return</span> Observable.from(strings);</div><div class="line">                      &#125;</div><div class="line">                  &#125;)</div><div class="line">                 .subscribe(<span class="keyword">new</span> Action1&lt;Integer&gt;() &#123;</div><div class="line">                     <span class="meta">@Override</span></div><div class="line">                     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Integer strings)</span> </span>&#123;</div><div class="line">                         mText.append(strings+<span class="string">"\n"</span>);</div><div class="line">                     &#125;</div><div class="line">                 &#125;);</div></pre></td></tr></table></figure>
+<h3 id="doOnNext"><a href="#doOnNext" class="headerlink" title="doOnNext"></a>doOnNext</h3><p>允许我们在每次输出一个元素之前做一些额外的事情(其实就是在onNext里调用的)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">.doOnNext(<span class="keyword">new</span> Action1&lt;String&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        <span class="comment">//onNext之前 输出一下</span></div><div class="line">        System.out.println(<span class="string">"doOnNext:"</span>+s);</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/RxJava/" rel="tag"># RxJava</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/RxJava2-0-二、线程调度/" rel="next" title="RxJava2.0  二、线程调度">
+                <i class="fa fa-chevron-left"></i> RxJava2.0  二、线程调度
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/RxJava-四、背压/" rel="prev" title="RxJava 四、背压">
+                RxJava 四、背压 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/uploads/title.jpg"
+              alt="chenzaidong" />
+          
+            <p class="site-author-name" itemprop="name">chenzaidong</p>
+            <p class="site-description motion-element" itemprop="description">有人爱 有事做 有所期待</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzaidong" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RxJava事件传递过程中的那些鬼斧神工的操作"><span class="nav-number">1.</span> <span class="nav-text">RxJava事件传递过程中的那些鬼斧神工的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">1.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlatMap"><span class="nav-number">1.2.</span> <span class="nav-text">FlatMap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#map与flatMap的区别"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">map与flatMap的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zip"><span class="nav-number">1.3.</span> <span class="nav-text">zip</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更多操作符可以查看："><span class="nav-number">2.</span> <span class="nav-text">更多操作符可以查看：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用操作符"><span class="nav-number">2.1.</span> <span class="nav-text">常用操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#from"><span class="nav-number">2.1.1.</span> <span class="nav-text">from</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#just"><span class="nav-number">2.1.2.</span> <span class="nav-text">just</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#empty"><span class="nav-number">2.1.3.</span> <span class="nav-text">empty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error"><span class="nav-number">2.1.4.</span> <span class="nav-text">error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#never"><span class="nav-number">2.1.5.</span> <span class="nav-text">never</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timer"><span class="nav-number">2.1.6.</span> <span class="nav-text">timer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interval"><span class="nav-number">2.1.7.</span> <span class="nav-text">interval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range"><span class="nav-number">2.1.8.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defer"><span class="nav-number">2.1.9.</span> <span class="nav-text">defer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并操作"><span class="nav-number">2.2.</span> <span class="nav-text">合并操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#concat"><span class="nav-number">2.2.1.</span> <span class="nav-text">concat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startWith"><span class="nav-number">2.2.2.</span> <span class="nav-text">startWith</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge操作符"><span class="nav-number">2.2.3.</span> <span class="nav-text">merge操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤操作"><span class="nav-number">2.3.</span> <span class="nav-text">过滤操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filter-过滤"><span class="nav-number">2.3.1.</span> <span class="nav-text">filter 过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ofType"><span class="nav-number">2.3.2.</span> <span class="nav-text">ofType</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#take提取操作符"><span class="nav-number">2.3.3.</span> <span class="nav-text">take提取操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#takeLast"><span class="nav-number">2.3.4.</span> <span class="nav-text">takeLast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#first-firstOrDefault"><span class="nav-number">2.3.5.</span> <span class="nav-text">first/firstOrDefault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#last-lastOrDefault"><span class="nav-number">2.3.6.</span> <span class="nav-text">last/lastOrDefault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#skip"><span class="nav-number">2.3.7.</span> <span class="nav-text">skip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#skipLast"><span class="nav-number">2.3.8.</span> <span class="nav-text">skipLast</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distinct"><span class="nav-number">2.3.9.</span> <span class="nav-text">distinct</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map-1"><span class="nav-number">2.3.10.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flatmap操作"><span class="nav-number">2.3.11.</span> <span class="nav-text">flatmap操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map与flatMap的区别-1"><span class="nav-number">2.3.12.</span> <span class="nav-text">map与flatMap的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toSortedList排序操作符"><span class="nav-number">2.3.13.</span> <span class="nav-text">toSortedList排序操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#doOnNext"><span class="nav-number">2.3.14.</span> <span class="nav-text">doOnNext</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenzaidong</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FYNUsMEPesJqt3wytETgaIay-gzGzoHsz", "bvkSr2yvSYvCKO3aRdaPnAG6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
