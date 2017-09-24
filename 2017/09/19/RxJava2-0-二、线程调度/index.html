@@ -36,11 +36,6 @@
 
 
 
-  <meta name="baidu-site-verification" content="true" />
-
-
-
-
 
 
 
@@ -109,7 +104,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1008453-27af762b477dd586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-09-19T11:55:36.785Z">
+<meta property="og:updated_time" content="2017-09-21T11:50:27.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava2.0  二、线程调度">
 <meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg">
@@ -431,7 +426,7 @@
 
       
         <p><img src="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg" alt="RxJava"><br><a id="more"></a><br>原文地址：<br><a href="http://www.jianshu.com/p/8818b98c44e2" target="_blank" rel="external">给初学者的RxJava2.0教程(二)</a></p>
-<p>还是以之前的例子, 两根水管:<br><img src="http://upload-images.jianshu.io/upload_images/1008453-27af762b477dd586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava"></p>
+<p>还是以之前的例子, 两根水管:<br><img src="http://upload-images.jianshu.io/upload_images/1008453-27af762b477dd586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava"> </p>
 <p>正常情况下, <code>上游</code>和<code>下游</code>是工作在同一个线程中的, 也就是说上游在哪个线程发事件, 下游就在哪个线程接收事件.</p>
 <p>比如我们在onCreate中打出当前线程的名字:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        Log.d(TAG, Thread.currentThread().getName());</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
