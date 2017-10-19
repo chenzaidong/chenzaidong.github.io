@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+<meta name="baidu-site-verification" content="VwSJtPrT0X" />
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,socket,udp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="原文地址 原理分析这些设备在局域网内，肯定是通过DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）来获取内网IP的。也就是说每个设备的IP都不是固定的。而我们主要目的就是要获取这些设备的IP地址。 也许你说，把手机设置成一个固定的内网IP，然后让这些设备来连接这个固定IP。看上去OK啊，但万一这个IP被占用了，怎办？ 每个设备的IP会变，但通信端口">
+<meta name="keywords" content="Android,socket,udp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDP 在局域网内搜索设备(原理)">
+<meta property="og:url" content="http://chenzd.cn/2017/10/19/UDP-在局域网内搜索设备-原理/index.html">
+<meta property="og:site_name" content="陈明日的博客">
+<meta property="og:description" content="原文地址 原理分析这些设备在局域网内，肯定是通过DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）来获取内网IP的。也就是说每个设备的IP都不是固定的。而我们主要目的就是要获取这些设备的IP地址。 也许你说，把手机设置成一个固定的内网IP，然后让这些设备来连接这个固定IP。看上去OK啊，但万一这个IP被占用了，怎办？ 每个设备的IP会变，但通信端口">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-19T14:19:34.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UDP 在局域网内搜索设备(原理)">
+<meta name="twitter:description" content="原文地址 原理分析这些设备在局域网内，肯定是通过DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）来获取内网IP的。也就是说每个设备的IP都不是固定的。而我们主要目的就是要获取这些设备的IP地址。 也许你说，把手机设置成一个固定的内网IP，然后让这些设备来连接这个固定IP。看上去OK啊，但万一这个IP被占用了，怎办？ 每个设备的IP会变，但通信端口">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzd.cn/2017/10/19/UDP-在局域网内搜索设备-原理/"/>
+
+
+
+
+
+  <title>UDP 在局域网内搜索设备(原理) | 陈明日的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">陈明日的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/10/19/UDP-在局域网内搜索设备-原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UDP 在局域网内搜索设备(原理)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T22:18:08+08:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/19/UDP-在局域网内搜索设备-原理/" class="leancloud_visitors" data-flag-title="UDP 在局域网内搜索设备(原理)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://blog.csdn.net/a10615/article/details/52427047" target="_blank" rel="external">原文地址</a></p>
+<h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>这些设备在局域网内，肯定是通过DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）来获取内网IP的。也就是说每个设备的IP都不是固定的。而我们主要目的就是要获取这些设备的IP地址。</p>
+<p>也许你说，把手机设置成一个固定的内网IP，然后让这些设备来连接这个固定IP。看上去OK啊，但万一这个IP被占用了，怎办？</p>
+<p>每个设备的IP会变，但通信端口我们肯定可以固定。这就可以运用上面的UDP广播（或组播）技术。具体流程：</p>
+<ol>
+<li>主机（Android手机）发送广播信息，并指定对方接收端口为devicePort；</li>
+<li>自己的发送端口为系统分配的hostPort，封装在DatagramSocket中，开始监听此端口。防丢失，一共发三次，每次发送后就监听一段时间；</li>
+<li>设备监听devicePort端口，收到信息后。首先解析数据验证是否是自己人（协议）发过来的，否，扔；是，则通过数据报获取对方的IP地址与端口hostPort；</li>
+<li>设备通过获取到的IP地址与端口hostPort，给主机发送响应信息；</li>
+<li>主机收到设备的响应，就可以知道设备的IP地址了。同时主机返回确认信息给设备，防止设备发给主机的响应信息丢失，毕竟是UDP；</li>
+<li>有了IP地址，就可以为所欲为了，比如：建立安全连接TCP。</li>
+</ol>
+<a id="more"></a>
+<p>下面是广播实现的代码，当然也可以用组播来实现。组播因为组播地址的原因，可以进一步加强安全性，代码中把广播的网络那块改成组播就好了</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>主机 – 搜索类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.net.DatagramPacket;</div><div class="line"><span class="keyword">import</span> java.net.DatagramSocket;</div><div class="line"><span class="keyword">import</span> java.net.InetAddress;</div><div class="line"><span class="keyword">import</span> java.net.SocketTimeoutException;</div><div class="line"><span class="keyword">import</span> java.nio.charset.Charset;</div><div class="line"><span class="keyword">import</span> java.util.HashSet;</div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 设备搜索类</span></div><div class="line"><span class="comment"> * Created by zjun on 2016/9/3.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DeviceSearcher</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = DeviceSearcher.class.getSimpleName();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEVICE_FIND_PORT = <span class="number">9000</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RECEIVE_TIME_OUT = <span class="number">1500</span>; <span class="comment">// 接收超时时间</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RESPONSE_DEVICE_MAX = <span class="number">200</span>; <span class="comment">// 响应设备的最大个数，防止UDP广播攻击</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_TYPE_FIND_DEVICE_REQ_10 = <span class="number">0x10</span>; <span class="comment">// 搜索请求</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_TYPE_FIND_DEVICE_RSP_11 = <span class="number">0x11</span>; <span class="comment">// 搜索响应</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_TYPE_FIND_DEVICE_CHK_12 = <span class="number">0x12</span>; <span class="comment">// 搜索确认</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_DATA_TYPE_DEVICE_NAME_20 = <span class="number">0x20</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_DATA_TYPE_DEVICE_ROOM_21 = <span class="number">0x21</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> DatagramSocket hostSocket;</div><div class="line">    <span class="keyword">private</span> Set&lt;DeviceBean&gt; mDeviceSet;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">byte</span> mPackType;</div><div class="line">    <span class="keyword">private</span> String mDeviceIP;</div><div class="line"></div><div class="line">    DeviceSearcher() &#123;</div><div class="line">        mDeviceSet = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            onSearchStart();</div><div class="line">            hostSocket = <span class="keyword">new</span> DatagramSocket();</div><div class="line">            <span class="comment">// 设置接收超时时间</span></div><div class="line">            hostSocket.setSoTimeout(RECEIVE_TIME_OUT);</div><div class="line"></div><div class="line">            <span class="keyword">byte</span>[] sendData = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">            InetAddress broadIP = InetAddress.getByName(<span class="string">"255.255.255.255"</span>);</div><div class="line">            DatagramPacket sendPack = <span class="keyword">new</span> DatagramPacket(sendData, sendData.length, broadIP, DEVICE_FIND_PORT);</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</div><div class="line">                <span class="comment">// 发送搜索广播</span></div><div class="line">                mPackType = PACKET_TYPE_FIND_DEVICE_REQ_10;</div><div class="line">                sendPack.setData(packData(i + <span class="number">1</span>));</div><div class="line">                hostSocket.send(sendPack);</div><div class="line"></div><div class="line">                <span class="comment">// 监听来信</span></div><div class="line">                <span class="keyword">byte</span>[] receData = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">                DatagramPacket recePack = <span class="keyword">new</span> DatagramPacket(receData, receData.length);</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="comment">// 最多接收200个，或超时跳出循环</span></div><div class="line">                    <span class="keyword">int</span> rspCount = RESPONSE_DEVICE_MAX;</div><div class="line">                    <span class="keyword">while</span> (rspCount-- &gt; <span class="number">0</span>) &#123;</div><div class="line">                        recePack.setData(receData);</div><div class="line">                        hostSocket.receive(recePack);</div><div class="line">                        <span class="keyword">if</span> (recePack.getLength() &gt; <span class="number">0</span>) &#123;</div><div class="line">                            mDeviceIP = recePack.getAddress().getHostAddress();</div><div class="line">                            <span class="keyword">if</span> (parsePack(recePack)) &#123;</div><div class="line">                                Log.i(TAG, <span class="string">"@@@zjun: 设备上线："</span> + mDeviceIP);</div><div class="line">                                <span class="comment">// 发送一对一的确认信息。使用接收报，因为接收报中有对方的实际IP，发送报时广播IP</span></div><div class="line">                                mPackType = PACKET_TYPE_FIND_DEVICE_CHK_12;</div><div class="line">                                recePack.setData(packData(rspCount)); <span class="comment">// 注意：设置数据的同时，把recePack.getLength()也改变了</span></div><div class="line">                                hostSocket.send(recePack);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">catch</span> (SocketTimeoutException e) &#123;</div><div class="line">                &#125;</div><div class="line">                Log.i(TAG, <span class="string">"@@@zjun: 结束搜索"</span> + i);</div><div class="line">            &#125;</div><div class="line">            onSearchFinish(mDeviceSet);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (hostSocket != <span class="keyword">null</span>) &#123;</div><div class="line">                hostSocket.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 搜索开始时执行</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onSearchStart</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 搜索结束后执行</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> deviceSet 搜索到的设备集合</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onSearchFinish</span><span class="params">(Set deviceSet)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 解析报文</span></div><div class="line"><span class="comment">     * 协议：$ + packType(1) + data(n)</span></div><div class="line"><span class="comment">     *  data: 由n组数据，每组的组成结构type(1) + length(4) + data(length)</span></div><div class="line"><span class="comment">     *  type类型中包含name、room类型，但name必须在最前面</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">parsePack</span><span class="params">(DatagramPacket pack)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (pack == <span class="keyword">null</span> || pack.getAddress() == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String ip = pack.getAddress().getHostAddress();</div><div class="line">        <span class="keyword">int</span> port = pack.getPort();</div><div class="line">        <span class="keyword">for</span> (DeviceBean d : mDeviceSet) &#123;</div><div class="line">            <span class="keyword">if</span> (d.getIp().equals(ip)) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> dataLen = pack.getLength();</div><div class="line">        <span class="keyword">int</span> offset = <span class="number">0</span>;</div><div class="line">        <span class="keyword">byte</span> packType;</div><div class="line">        <span class="keyword">byte</span> type;</div><div class="line">        <span class="keyword">int</span> len;</div><div class="line">        DeviceBean device = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (dataLen &lt; <span class="number">2</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[dataLen];</div><div class="line">        System.arraycopy(pack.getData(), pack.getOffset(), data, <span class="number">0</span>, dataLen);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (data[offset++] != <span class="string">'$'</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        packType = data[offset++];</div><div class="line">        <span class="keyword">if</span> (packType != PACKET_TYPE_FIND_DEVICE_RSP_11) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (offset + <span class="number">5</span> &lt; dataLen) &#123;</div><div class="line">            type = data[offset++];</div><div class="line">            len = data[offset++] &amp; <span class="number">0xFF</span>;</div><div class="line">            len |= (data[offset++] &lt;&lt; <span class="number">8</span>);</div><div class="line">            len |= (data[offset++] &lt;&lt; <span class="number">16</span>);</div><div class="line">            len |= (data[offset++] &lt;&lt; <span class="number">24</span>);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (offset + len &gt; dataLen) &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">switch</span> (type) &#123;</div><div class="line">                <span class="keyword">case</span> PACKET_DATA_TYPE_DEVICE_NAME_20:</div><div class="line">                    String name = <span class="keyword">new</span> String(data, offset, len, Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">                    device = <span class="keyword">new</span> DeviceBean();</div><div class="line">                    device.setName(name);</div><div class="line">                    device.setIp(ip);</div><div class="line">                    device.setPort(port);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> PACKET_DATA_TYPE_DEVICE_ROOM_21:</div><div class="line">                    String room = <span class="keyword">new</span> String(data, offset, len, Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">                    <span class="keyword">if</span> (device != <span class="keyword">null</span>) &#123;</div><div class="line">                        device.setRoom(room);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>: <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            offset += len;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (device != <span class="keyword">null</span>) &#123;</div><div class="line">            mDeviceSet.add(device);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 打包搜索报文</span></div><div class="line"><span class="comment">     * 协议：$ + packType(1) + sendSeq(4) + [deviceIP(n&lt;=15)]</span></div><div class="line"><span class="comment">     *  packType - 报文类型</span></div><div class="line"><span class="comment">     *  sendSeq - 发送序列</span></div><div class="line"><span class="comment">     *  deviceIP - 设备IP，仅确认时携带</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] packData(<span class="keyword">int</span> seq) &#123;</div><div class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">        <span class="keyword">int</span> offset = <span class="number">0</span>;</div><div class="line"></div><div class="line">        data[offset++] = <span class="string">'$'</span>;</div><div class="line"></div><div class="line">        data[offset++] = mPackType;</div><div class="line"></div><div class="line">        seq = seq == <span class="number">3</span> ? <span class="number">1</span> : ++seq; <span class="comment">// can't use findSeq++</span></div><div class="line">        data[offset++] = (<span class="keyword">byte</span>) seq;</div><div class="line">        data[offset++] = (<span class="keyword">byte</span>) (seq &gt;&gt; <span class="number">8</span> );</div><div class="line">        data[offset++] = (<span class="keyword">byte</span>) (seq &gt;&gt; <span class="number">16</span>);</div><div class="line">        data[offset++] = (<span class="keyword">byte</span>) (seq &gt;&gt; <span class="number">24</span>);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mPackType == PACKET_TYPE_FIND_DEVICE_CHK_12) &#123;</div><div class="line">            <span class="keyword">byte</span>[] ips = mDeviceIP.getBytes(Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">            System.arraycopy(ips, <span class="number">0</span>, data, offset, ips.length);</div><div class="line">            offset += ips.length;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] result = <span class="keyword">new</span> <span class="keyword">byte</span>[offset];</div><div class="line">        System.arraycopy(data, <span class="number">0</span>, result, <span class="number">0</span>, offset);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 设备Bean</span></div><div class="line"><span class="comment">     * 只要IP一样，则认为是同一个设备</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DeviceBean</span></span>&#123;</div><div class="line">        String ip;      <span class="comment">// IP地址</span></div><div class="line">        <span class="keyword">int</span> port;       <span class="comment">// 端口</span></div><div class="line">        String name;    <span class="comment">// 设备名称</span></div><div class="line">        String room;    <span class="comment">// 设备所在房间</span></div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> ip.hashCode();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (o <span class="keyword">instanceof</span> DeviceBean) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.ip.equals(((DeviceBean)o).getIp());</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.equals(o);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getIp</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> ip;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIp</span><span class="params">(String ip)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.ip = ip;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPort</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> port;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPort</span><span class="params">(<span class="keyword">int</span> port)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.port = port;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> name;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.name = name;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getRoom</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> room;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoom</span><span class="params">(String room)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.room = room;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>主机——demo核心代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> List&lt;DeviceSearcher.DeviceBean&gt; mDeviceList;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">searchDevices_broadcast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">new</span> DeviceSearcher() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSearchStart</span><span class="params">()</span> </span>&#123;</div><div class="line">            startSearch(); <span class="comment">// 主要用于在UI上展示正在搜索</span></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSearchFinish</span><span class="params">(Set deviceSet)</span> </span>&#123;</div><div class="line">            endSearch(); <span class="comment">// 结束UI上的正在搜索</span></div><div class="line">            mDeviceList.clear();</div><div class="line">            mDeviceList.addAll(deviceSet);</div><div class="line">            mHandler.sendEmptyMessage(<span class="number">0</span>); <span class="comment">// 在UI上更新设备列表</span></div><div class="line">        &#125;</div><div class="line">    &#125;.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>设备——设备等待搜索类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.net.wifi.WifiInfo;</div><div class="line"><span class="keyword">import</span> android.net.wifi.WifiManager;</div><div class="line"><span class="keyword">import</span> android.util.Log;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.net.DatagramPacket;</div><div class="line"><span class="keyword">import</span> java.net.DatagramSocket;</div><div class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</div><div class="line"><span class="keyword">import</span> java.net.SocketTimeoutException;</div><div class="line"><span class="keyword">import</span> java.nio.charset.Charset;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 设备等待搜索类</span></div><div class="line"><span class="comment"> * Created by zjun on 2016/9/4.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DeviceWaitingSearch</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String TAG = DeviceWaitingSearch.class.getSimpleName();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEVICE_FIND_PORT = <span class="number">9000</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RECEIVE_TIME_OUT = <span class="number">1500</span>; <span class="comment">// 接收超时时间，应小于等于主机的超时时间1500</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RESPONSE_DEVICE_MAX = <span class="number">200</span>; <span class="comment">// 响应设备的最大个数，防止UDP广播攻击</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_TYPE_FIND_DEVICE_REQ_10 = <span class="number">0x10</span>; <span class="comment">// 搜索请求</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_TYPE_FIND_DEVICE_RSP_11 = <span class="number">0x11</span>; <span class="comment">// 搜索响应</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_TYPE_FIND_DEVICE_CHK_12 = <span class="number">0x12</span>; <span class="comment">// 搜索确认</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_DATA_TYPE_DEVICE_NAME_20 = <span class="number">0x20</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">byte</span> PACKET_DATA_TYPE_DEVICE_ROOM_21 = <span class="number">0x21</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> String deviceName, deviceRoom;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DeviceWaitingSearch</span><span class="params">(Context context, String name, String room)</span> </span>&#123;</div><div class="line">        mContext = context;</div><div class="line">        deviceName = name;</div><div class="line">        deviceRoom = room;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        DatagramSocket socket = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            socket = <span class="keyword">new</span> DatagramSocket(DEVICE_FIND_PORT);</div><div class="line">            <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">            DatagramPacket pack = <span class="keyword">new</span> DatagramPacket(data, data.length);</div><div class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">                <span class="comment">// 等待主机的搜索</span></div><div class="line">                socket.receive(pack);</div><div class="line">                <span class="keyword">if</span> (verifySearchData(pack)) &#123;</div><div class="line">                    <span class="keyword">byte</span>[] sendData = packData();</div><div class="line">                    DatagramPacket sendPack = <span class="keyword">new</span> DatagramPacket(sendData, sendData.length, pack.getAddress(), pack.getPort());</div><div class="line">                    Log.i(TAG, <span class="string">"@@@zjun: 给主机回复信息"</span>);</div><div class="line">                    socket.send(sendPack);</div><div class="line">                    Log.i(TAG, <span class="string">"@@@zjun: 等待主机接收确认"</span>);</div><div class="line">                    socket.setSoTimeout(RECEIVE_TIME_OUT);</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        socket.receive(pack);</div><div class="line">                        <span class="keyword">if</span> (verifyCheckData(pack)) &#123;</div><div class="line">                            Log.i(TAG, <span class="string">"@@@zjun: 确认成功"</span>);</div><div class="line">                            onDeviceSearched((InetSocketAddress) pack.getSocketAddress());</div><div class="line">                            <span class="keyword">break</span>;</div><div class="line">                        &#125;</div><div class="line">                    &#125; <span class="keyword">catch</span> (SocketTimeoutException e) &#123;</div><div class="line">                    &#125;</div><div class="line">                    socket.setSoTimeout(<span class="number">0</span>); <span class="comment">// 连接超时还原成无穷大，阻塞式接收</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (socket != <span class="keyword">null</span>) &#123;</div><div class="line">                socket.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 当设备被发现时执行</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onDeviceSearched</span><span class="params">(InetSocketAddress socketAddr)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 打包响应报文</span></div><div class="line"><span class="comment">     * 协议：$ + packType(1) + data(n)</span></div><div class="line"><span class="comment">     *  data: 由n组数据，每组的组成结构type(1) + length(4) + data(length)</span></div><div class="line"><span class="comment">     *  type类型中包含name、room类型，但name必须在最前面</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] packData() &#123;</div><div class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">        <span class="keyword">int</span> offset = <span class="number">0</span>;</div><div class="line">        data[offset++] = <span class="string">'$'</span>;</div><div class="line">        data[offset++] = PACKET_TYPE_FIND_DEVICE_RSP_11;</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] temp = getBytesFromType(PACKET_DATA_TYPE_DEVICE_NAME_20, deviceName);</div><div class="line">        System.arraycopy(temp, <span class="number">0</span>, data, offset, temp.length);</div><div class="line">        offset += temp.length;</div><div class="line"></div><div class="line">        temp = getBytesFromType(PACKET_DATA_TYPE_DEVICE_ROOM_21, deviceRoom);</div><div class="line">        System.arraycopy(temp, <span class="number">0</span>, data, offset, temp.length);</div><div class="line">        offset += temp.length;</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] retVal = <span class="keyword">new</span> <span class="keyword">byte</span>[offset];</div><div class="line">        System.arraycopy(data, <span class="number">0</span>, retVal, <span class="number">0</span>, offset);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> retVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] getBytesFromType(<span class="keyword">byte</span> type, String val) &#123;</div><div class="line">        <span class="keyword">byte</span>[] retVal = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>];</div><div class="line">        <span class="keyword">if</span> (val != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">byte</span>[] valBytes = val.getBytes(Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">            retVal = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">5</span> + valBytes.length];</div><div class="line">            retVal[<span class="number">0</span>] = type;</div><div class="line">            retVal[<span class="number">1</span>] = (<span class="keyword">byte</span>) valBytes.length;</div><div class="line">            retVal[<span class="number">2</span>] = (<span class="keyword">byte</span>) (valBytes.length &gt;&gt; <span class="number">8</span> );</div><div class="line">            retVal[<span class="number">3</span>] = (<span class="keyword">byte</span>) (valBytes.length &gt;&gt; <span class="number">16</span>);</div><div class="line">            retVal[<span class="number">4</span>] = (<span class="keyword">byte</span>) (valBytes.length &gt;&gt; <span class="number">24</span>);</div><div class="line">            System.arraycopy(valBytes, <span class="number">0</span>, retVal, <span class="number">5</span>, valBytes.length);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> retVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 校验搜索数据</span></div><div class="line"><span class="comment">     * 协议：$ + packType(1) + sendSeq(4)</span></div><div class="line"><span class="comment">     *  packType - 报文类型</span></div><div class="line"><span class="comment">     *  sendSeq - 发送序列</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">verifySearchData</span><span class="params">(DatagramPacket pack)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (pack.getLength() != <span class="number">6</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] data = pack.getData();</div><div class="line">        <span class="keyword">int</span> offset = pack.getOffset();</div><div class="line">        <span class="keyword">int</span> sendSeq;</div><div class="line">        <span class="keyword">if</span> (data[offset++] != <span class="string">'$'</span> || data[offset++] != PACKET_TYPE_FIND_DEVICE_REQ_10) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        sendSeq = data[offset++] &amp; <span class="number">0xFF</span>;</div><div class="line">        sendSeq |= (data[offset++] &lt;&lt; <span class="number">8</span> );</div><div class="line">        sendSeq |= (data[offset++] &lt;&lt; <span class="number">16</span>);</div><div class="line">        sendSeq |= (data[offset++] &lt;&lt; <span class="number">24</span>);</div><div class="line">        <span class="keyword">return</span> sendSeq &gt;= <span class="number">1</span> &amp;&amp; sendSeq &lt;= <span class="number">3</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 校验确认数据</span></div><div class="line"><span class="comment">     * 协议：$ + packType(1) + sendSeq(4) + deviceIP(n&lt;=15)</span></div><div class="line"><span class="comment">     *  packType - 报文类型</span></div><div class="line"><span class="comment">     *  sendSeq - 发送序列</span></div><div class="line"><span class="comment">     *  deviceIP - 设备IP，仅确认时携带</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">verifyCheckData</span><span class="params">(DatagramPacket pack)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (pack.getLength() &lt; <span class="number">6</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] data = pack.getData();</div><div class="line">        <span class="keyword">int</span> offset = pack.getOffset();</div><div class="line">        <span class="keyword">int</span> sendSeq;</div><div class="line">        <span class="keyword">if</span> (data[offset++] != <span class="string">'$'</span> || data[offset++] != PACKET_TYPE_FIND_DEVICE_CHK_12) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        sendSeq = data[offset++] &amp; <span class="number">0xFF</span>;</div><div class="line">        sendSeq |= (data[offset++] &lt;&lt; <span class="number">8</span> );</div><div class="line">        sendSeq |= (data[offset++] &lt;&lt; <span class="number">16</span>);</div><div class="line">        sendSeq |= (data[offset++] &lt;&lt; <span class="number">24</span>);</div><div class="line">        <span class="keyword">if</span> (sendSeq &lt; <span class="number">1</span> || sendSeq &gt; RESPONSE_DEVICE_MAX) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String ip = <span class="keyword">new</span> String(data, offset, pack.getLength() - offset, Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">        Log.i(TAG, <span class="string">"@@@zjun: ip from host="</span> + ip);</div><div class="line">        <span class="keyword">return</span> ip.equals(getOwnWifiIP());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 获取本机在Wifi中的IP</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getOwnWifiIP</span><span class="params">()</span> </span>&#123;</div><div class="line">        WifiManager wm = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);</div><div class="line">        <span class="keyword">if</span> (!wm.isWifiEnabled()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 需加权限：android.permission.ACCESS_WIFI_STATE</span></div><div class="line">        WifiInfo wifiInfo = wm.getConnectionInfo();</div><div class="line">        <span class="keyword">int</span> ipInt = wifiInfo.getIpAddress();</div><div class="line">        String ipAddr = int2Ip(ipInt);</div><div class="line">        Log.i(TAG, <span class="string">"@@@zjun: 本机IP="</span> + ipAddr);</div><div class="line">        <span class="keyword">return</span> int2Ip(ipInt);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 把int表示的ip转换成字符串ip</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">int2Ip</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> String.format(<span class="string">"%d.%d.%d.%d"</span>, i &amp; <span class="number">0xFF</span>, (i &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xFF</span>, (i &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xFF</span>, (i &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xFF</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>设备——demo核心代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initData</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">new</span> DeviceWaitingSearch(<span class="keyword">this</span>, <span class="string">"日灯光"</span>, <span class="string">"客厅"</span>)&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDeviceSearched</span><span class="params">(InetSocketAddress socketAddr)</span> </span>&#123;</div><div class="line">            pushMsgToMain(<span class="string">"已上线，搜索主机："</span> + socketAddr.getAddress().getHostAddress() + <span class="string">":"</span> + socketAddr.getPort());</div><div class="line">        &#125;</div><div class="line">    &#125;.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/socket/" rel="tag"># socket</a>
+          
+            <a href="/tags/udp/" rel="tag"># udp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/19/UDP基础/" rel="next" title="UDP基础">
+                <i class="fa fa-chevron-left"></i> UDP基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/19/UDP-在局域网内搜索设备-封装/" rel="prev" title="UDP 在局域网内搜索设备(封装)">
+                UDP 在局域网内搜索设备(封装) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/uploads/title.jpg"
+              alt="chenzaidong" />
+          
+            <p class="site-author-name" itemprop="name">chenzaidong</p>
+            <p class="site-description motion-element" itemprop="description">有人爱 有事做 有所期待</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzaidong" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理分析"><span class="nav-number">1.</span> <span class="nav-text">原理分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenzaidong</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FYNUsMEPesJqt3wytETgaIay-gzGzoHsz", "bvkSr2yvSYvCKO3aRdaPnAG6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

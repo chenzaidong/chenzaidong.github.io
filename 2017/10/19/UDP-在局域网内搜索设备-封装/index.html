@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,socket,udp," />
 
 
 
@@ -96,16 +96,21 @@
 
 
 
-<meta name="description" content="有人爱 有事做 有所期待">
-<meta property="og:type" content="website">
-<meta property="og:title" content="陈明日的博客">
-<meta property="og:url" content="http://chenzd.cn/archives/2017/09/index.html">
+<meta name="description" content="原文地址 主要优化的地方：  用户可选择是否携带自定义协议数据。如设备（或主机）可以直接携带设备名称、房间等信息 主机可把设备携带的信息可直接封装在设备对象中  原理回顾主机与设备在同一局域网中，它们与路由器的连接为有线或无线。    这样就能获取到设备的IP地址，接下来就能随心所欲了，如建立TCP连接。">
+<meta name="keywords" content="Android,socket,udp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDP 在局域网内搜索设备(封装)">
+<meta property="og:url" content="http://chenzd.cn/2017/10/19/UDP-在局域网内搜索设备-封装/index.html">
 <meta property="og:site_name" content="陈明日的博客">
-<meta property="og:description" content="有人爱 有事做 有所期待">
+<meta property="og:description" content="原文地址 主要优化的地方：  用户可选择是否携带自定义协议数据。如设备（或主机）可以直接携带设备名称、房间等信息 主机可把设备携带的信息可直接封装在设备对象中  原理回顾主机与设备在同一局域网中，它们与路由器的连接为有线或无线。    这样就能获取到设备的IP地址，接下来就能随心所欲了，如建立TCP连接。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160923171714896">
+<meta property="og:image" content="http://img.blog.csdn.net/20160923172918656">
+<meta property="og:updated_time" content="2017-10-19T14:20:02.572Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="陈明日的博客">
-<meta name="twitter:description" content="有人爱 有事做 有所期待">
+<meta name="twitter:title" content="UDP 在局域网内搜索设备(封装)">
+<meta name="twitter:description" content="原文地址 主要优化的地方：  用户可选择是否携带自定义协议数据。如设备（或主机）可以直接携带设备名称、房间等信息 主机可把设备携带的信息可直接封装在设备对象中  原理回顾主机与设备在同一局域网中，它们与路由器的连接为有线或无线。    这样就能获取到设备的IP地址，接下来就能随心所欲了，如建立TCP连接。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160923171714896">
 
 
 
@@ -135,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://chenzd.cn/archives/2017/09/"/>
+  <link rel="canonical" href="http://chenzd.cn/2017/10/19/UDP-在局域网内搜索设备-封装/"/>
 
 
 
 
 
-  <title>归档 | 陈明日的博客</title>
+  <title>UDP 在局域网内搜索设备(封装) | 陈明日的博客</title>
   
 
 
@@ -160,7 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -298,259 +303,242 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/10/19/UDP-在局域网内搜索设备-封装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">UDP 在局域网内搜索设备(封装)</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T22:18:31+08:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 10 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
-      
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
 
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/10/19/UDP-在局域网内搜索设备-封装/" class="leancloud_visitors" data-flag-title="UDP 在局域网内搜索设备(封装)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/shell-命令/" itemprop="url">
-              
-                <span itemprop="name">shell 命令</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T23:34:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava-四、背压/" itemprop="url">
-              
-                <span itemprop="name">RxJava 四、背压</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:27:12+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-三、操作符/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 三、操作符</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:26:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-二、线程调度/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0  二、线程调度</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:24:49+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><a href="http://blog.csdn.net/a10615/article/details/52639074" target="_blank" rel="external">原文地址</a></p>
+<p>主要优化的地方：</p>
+<ul>
+<li>用户可选择是否携带自定义协议数据。如设备（或主机）可以直接携带设备名称、房间等信息</li>
+<li>主机可把设备携带的信息可直接封装在设备对象中</li>
+</ul>
+<h3 id="原理回顾"><a href="#原理回顾" class="headerlink" title="原理回顾"></a>原理回顾</h3><p>主机与设备在同一局域网中，它们与路由器的连接为有线或无线。 </p>
+<p><img src="http://img.blog.csdn.net/20160923171714896" alt="局域网1"></p>
+<p><img src="http://img.blog.csdn.net/20160923172918656" alt="局域网2"></p>
+<p>这样就能获取到设备的IP地址，接下来就能随心所欲了，如建立TCP连接。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p><a href="https://github.com/chenzaidong/UdpBroadcastSearcher" target="_blank" rel="external">源码及DEMO</a></p>
+<h4 id="1-不携带用户数据的使用（最简单的使用）"><a href="#1-不携带用户数据的使用（最简单的使用）" class="headerlink" title="1. 不携带用户数据的使用（最简单的使用）"></a>1. 不携带用户数据的使用（最简单的使用）</h4><p>只要实现内部的抽象方法即可。</p>
+<p><strong>主机：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">new</span> SearcherHost() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSearchStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSearchFinish</span><span class="params">(Set deviceSet)</span> </span>&#123;</div><div class="line">        <span class="comment">//所有设备集合都在deviceSet中，通过getIp()可获取设备IP，getPort()获取端口</span></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(String log)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;.search();</div></pre></td></tr></table></figure>
+<p><strong>设备：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 创建设备</span></div><div class="line">SearcherDevice mSearcherDevice = <span class="keyword">new</span> SearcherDevice() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDeviceSearched</span><span class="params">(InetSocketAddress inetSocketAddress)</span> </span>&#123;</div><div class="line">        <span class="comment">// 主机IP: inetSocketAddress.getAddress().getHostAddress()</span></div><div class="line">        <span class="comment">// 主机端口：inetSocketAddress.getPort()</span></div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 打开设备</span></div><div class="line">mSearcherDevice.open();</div><div class="line"></div><div class="line"><span class="comment">// 关闭设备</span></div><div class="line">mSearcherDevice.close();</div></pre></td></tr></table></figure>
+<h4 id="2-携带用户数据的使用"><a href="#2-携带用户数据的使用" class="headerlink" title="2. 携带用户数据的使用"></a>2. 携带用户数据的使用</h4><p>若需要携带用户数据，必须重写类的用户数据<code>打包</code>与<code>解包</code>方法。</p>
+<p><strong>主机：</strong></p>
+<ol>
+<li>【可选】在构造方法中，指定泛型的具体类型。若不指定，parseUserData()也许需要强转。</li>
+<li>在构造方法中，设置用于接收设备用户数据的最大字节长度（≥设备发送的用户数据长度）</li>
+<li>在构造方法中，设置设备类的字节码，没有重写，则写SearcherHost.DeviceBean.class（用于内部通过反射创建实例对象）</li>
+<li><p>重写两个用户数据打包方法： </p>
+<p> <code>packUserDataSearch()</code>和<code>packUserDataCheck()</code></p>
+</li>
+<li><p>重写用户数据解析方法： </p>
+<p> <code>parseUserData(byte type, MyDevice device, byte[] userData)</code></p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">SearcherHost searcherHost = <span class="keyword">new</span> SearcherHost&lt;MyDevice&gt;(<span class="number">1024</span>, MyDevice.class) &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSearchStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSearchFinish</span><span class="params">(Set deviceSet)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(String log)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 重写以下3个方法</span></div><div class="line"><span class="comment">     */</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 打包搜索时数据</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span>[] packUserData_Search() &#123;</div><div class="line">       ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 打包核对时的数据</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span>[] packUserData_Check() &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 解析用户数据</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> type 类型。搜索申请or搜索确认</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> device 设备</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> userData 数据</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> true-解析成功</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">parseUserData</span><span class="params">(<span class="keyword">byte</span> type, MyDevice device, <span class="keyword">byte</span>[] userData)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 开始搜索</span></div><div class="line">searcherHost.search();</div></pre></td></tr></table></figure>
+<p><strong>设备：</strong></p>
+<ol>
+<li>在构造方法中，设置用于接收设备用户数据的最大字节长度（≥主机发送的用户数据长度）</li>
+<li><p>重写设备响应时的用户数据打包方法： </p>
+<p> <code>packUserData()</code></p>
+</li>
+<li><p>重写用户数据解析方法： </p>
+<p> <code>parseUserData(byte type, byte[] userData)</code></p>
+</li>
+<li><p>【可选】重写判断是否为本机ip地址的方法（主要用于判断主机确认返回的ip地址是否正确，默认返回true）： </p>
+<p> <code>isOwnIp(String ip)</code></p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">SearcherDevice searcherDevice = <span class="keyword">new</span> SearcherDevice(<span class="number">1024</span>) &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDeviceSearched</span><span class="params">(InetSocketAddress inetSocketAddress)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printLog</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 重写以下2个方法</span></div><div class="line"><span class="comment">     */</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 响应时的打包数据</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span>[] packUserData() &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line"><span class="comment">    * 解析用户数据</span></div><div class="line"><span class="comment">    * <span class="doctag">@param</span> type 类型，搜索请求or搜索确认</span></div><div class="line"><span class="comment">    * <span class="doctag">@param</span> userData 用户数据</span></div><div class="line"><span class="comment">    * <span class="doctag">@return</span> 解析结果是否成功</span></div><div class="line"><span class="comment">    */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">parseUserData</span><span class="params">(<span class="keyword">byte</span> type, <span class="keyword">byte</span>[] userData)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 判断ip是否是本机ip</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> ip 判断的ip地址</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOwnIp</span><span class="params">(String ip)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">searcherDevice.open();</div></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-一、基础/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 一、基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:15:00+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/17/Android-TV-焦点框/" itemprop="url">
-              
-                <span itemprop="name">Android TV 焦点框</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-17T17:21:50+08:00"
-              content="2017-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/socket/" rel="tag"># socket</a>
+          
+            <a href="/tags/udp/" rel="tag"># udp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/19/UDP-在局域网内搜索设备-原理/" rel="next" title="UDP 在局域网内搜索设备(原理)">
+                <i class="fa fa-chevron-left"></i> UDP 在局域网内搜索设备(原理)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/19/framework学习笔记-一/" rel="prev" title="framework学习笔记 (一)">
+                framework学习笔记 (一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -558,6 +546,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -578,8 +572,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -652,6 +655,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理回顾"><span class="nav-number">1.</span> <span class="nav-text">原理回顾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-不携带用户数据的使用（最简单的使用）"><span class="nav-number">1.1.</span> <span class="nav-text">1. 不携带用户数据的使用（最简单的使用）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-携带用户数据的使用"><span class="nav-number">1.2.</span> <span class="nav-text">2. 携带用户数据的使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -805,6 +824,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
     
   
 

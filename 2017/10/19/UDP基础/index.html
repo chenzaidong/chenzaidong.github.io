@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+<meta name="baidu-site-verification" content="VwSJtPrT0X" />
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,socket,udp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="原文地址 UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。关于UDP网络编程，主要区分TCP，注意以下几点：  网络连接属于耗时，必须在子线程中执行。网络的连接主要在socket的send()和receive(); 服务器与客户端的套接字都是DatagramSocket; 接收时监听的端口与DatagramSocket直接绑定，此绑定的端口">
+<meta name="keywords" content="Android,socket,udp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDP基础">
+<meta property="og:url" content="http://chenzd.cn/2017/10/19/UDP基础/index.html">
+<meta property="og:site_name" content="陈明日的博客">
+<meta property="og:description" content="原文地址 UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。关于UDP网络编程，主要区分TCP，注意以下几点：  网络连接属于耗时，必须在子线程中执行。网络的连接主要在socket的send()和receive(); 服务器与客户端的套接字都是DatagramSocket; 接收时监听的端口与DatagramSocket直接绑定，此绑定的端口">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160902235407042">
+<meta property="og:updated_time" content="2017-10-19T14:17:27.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UDP基础">
+<meta name="twitter:description" content="原文地址 UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。关于UDP网络编程，主要区分TCP，注意以下几点：  网络连接属于耗时，必须在子线程中执行。网络的连接主要在socket的send()和receive(); 服务器与客户端的套接字都是DatagramSocket; 接收时监听的端口与DatagramSocket直接绑定，此绑定的端口">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160902235407042">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenzd.cn/2017/10/19/UDP基础/"/>
+
+
+
+
+
+  <title>UDP基础 | 陈明日的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">陈明日的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好记性不如烂笔头~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/10/19/UDP基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UDP基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T22:14:14+08:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/19/UDP基础/" class="leancloud_visitors" data-flag-title="UDP基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://blog.csdn.net/a10615/article/details/52395592" target="_blank" rel="external">原文地址</a></p>
+<h3 id="UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。"><a href="#UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。" class="headerlink" title="UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。"></a>UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。</h3><p>关于UDP网络编程，主要区分TCP，注意以下几点：</p>
+<ol>
+<li>网络连接属于耗时，必须在子线程中执行。网络的连接主要在socket的send()和receive();</li>
+<li>服务器与客户端的套接字都是DatagramSocket;</li>
+<li>接收时监听的端口与DatagramSocket直接绑定，此绑定的端口也可直接用于发送数据。</li>
+<li>目标主机及端口信息都是封装在数据报DatagramPacket中。本机的发送端口若未绑定，则是由系统分配。</li>
+<li>是数据报模式(TCP是流模式)，数据发送与接收都是使用数据报，一次性发送完毕，接收也是一次性必须全部接收完毕，所以数据缓冲区要足够大，否则会导致数据丢失了；</li>
+<li>能在局域网内组播和广播。</li>
+</ol>
+<a id="more"></a>
+<h3 id="UDP服务器"><a href="#UDP服务器" class="headerlink" title="UDP服务器"></a>UDP服务器</h3><p>主要API:</p>
+<ol>
+<li>DatagramSocket:<ul>
+<li>new DatagramSocket(int port) — 创建监听端口为port的套接字</li>
+<li>setSoTimeout(int timeout) — 设置接收信息的超时时间。不设置，则一直阻塞</li>
+<li>receive(Datagrampacket packet) — 用数据报packet接收数据，阻塞试。未设置超时时间，一直阻塞，设置了没接收到数据会抛SocketTimeoutException</li>
+<li>close() — 关闭</li>
+</ul>
+</li>
+<li>DatagramPacket:<ul>
+<li>new DataframePacket(byte[] data,int length) — 创建一个data为数据缓冲区，数据最大长度(≤ data.length) 为length的数据报。有效数据缓冲区应该足够大来装下对方送来过来的全部数据，否则超过缓冲区的数据将丢失。</li>
+<li>getLength() — 获取接收到的数据的有效长度</li>
+<li>getData() — 获取数据报中的数据，就是上面的data</li>
+<li>getAddress().getHostAddress() — 获取数据报中的主机IP地址。发送和接收获取的，都是对方IP</li>
+<li>getPort() — 获取数据报中的端口。发送和接收获取的，都是对方IP</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//服务器端代码</span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">boolean</span> mIsServerOn;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">turnOnUdpServer</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> port = <span class="number">8000</span>;</div><div class="line">        <span class="keyword">new</span> Thread(</div><div class="line">                <span class="keyword">new</span> Runnable() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                        DatagramSocket socket = <span class="keyword">null</span>;</div><div class="line">                        <span class="keyword">try</span> &#123;</div><div class="line">                            <span class="comment">//1、创建套接字</span></div><div class="line">                            socket = <span class="keyword">new</span> DatagramSocket(port);</div><div class="line">                            <span class="comment">//2、创建数据报</span></div><div class="line">                            <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">                            DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(data, data.length);</div><div class="line"></div><div class="line">                            <span class="comment">//3、一直监听端口，接收数据报</span></div><div class="line">                            mIsServerOn = <span class="keyword">true</span>;</div><div class="line">                            <span class="keyword">while</span> (mIsServerOn) &#123;</div><div class="line">                                socket.receive(packet);</div><div class="line">                                String rece = <span class="keyword">new</span> String(data, <span class="number">0</span>, packet.getLength(), Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">                                <span class="comment">//pushMsgToMain(rece);//推送信息到主线程</span></div><div class="line">                                Log.i(TAG, <span class="string">"接收到的信息："</span> + rece);</div><div class="line">                            &#125;</div><div class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                            <span class="keyword">if</span> (<span class="keyword">null</span> != socket) &#123;</div><div class="line">                                socket.close();</div><div class="line">                                socket = <span class="keyword">null</span>;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">        ).start();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="UDP客户端"><a href="#UDP客户端" class="headerlink" title="UDP客户端"></a>UDP客户端</h3><p>主要API(与服务器一样的，就不介绍了)：</p>
+<ol>
+<li>DatagramSocket:<ul>
+<li>new DatagramSocket() — 创建套接字，端口为系统给定</li>
+<li>getLocalPort() — 获取套接字绑定在本机的端口</li>
+<li>getLocalAddress().getHostAddress() — 获取本机IP地址。需要connect()连接成功后才能获取到</li>
+<li>bind(SocketAddress addr) — 将套接字连接到远程套接字地址(IP地址 + 端口号)。连接后，在数据报中客户不指定目标主机IP和端口了，如果要指定，必须与connect中的一样</li>
+<li>isConencted() — 用connect()连接成功后，返回true</li>
+</ul>
+</li>
+<li>DatagramPacket:<ul>
+<li>new DatagramPacket(byte[] data,int length,SocketAddress sockAddr) — 创建数据报，并指定目标主机的套接字地址</li>
+<li>new DatagramPacket(byte[] data,int length,InetAddress host,int port) – 创建数据报，并指定目标主机的网络地址和端口号</li>
+</ul>
+</li>
+<li>InetAddress:<ul>
+<li>InetAddress.getByName(String host) — 创建IP地址为host的网络地址对象，封装IP地址</li>
+</ul>
+</li>
+<li>SocketAddress:<ul>
+<li>new InetSocketAddress(String host,int port) — 创建IP地址为host,端口号为port的套接字地址对象，封装了IP地址和端口号。<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">turnOnUdpClient</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> String hostIp = <span class="string">"192.168.8.101"</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> port = <span class="number">8000</span>;</div><div class="line"></div><div class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            DatagramSocket socket = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">            <span class="comment">//1、创建套接字</span></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                socket = <span class="keyword">new</span> DatagramSocket(port);</div><div class="line"></div><div class="line">                <span class="comment">//2、创建host的地址包装实例</span></div><div class="line">                SocketAddress socketAddress = <span class="keyword">new</span> InetSocketAddress(hostIp,port);</div><div class="line"></div><div class="line">                <span class="comment">//3、创建数据报。包含要发送的数据、与目标主机地址</span></div><div class="line">                <span class="keyword">byte</span>[] data = <span class="string">"Hello,I am Client"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">                DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(data,data.length,socketAddress);</div><div class="line"></div><div class="line">                <span class="comment">//4、发送数据</span></div><div class="line">                socket.send(packet);</div><div class="line"></div><div class="line">                <span class="comment">//再次发送数据</span></div><div class="line">                packet.setData(<span class="string">"Second information from client"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>)));</div><div class="line">                socket.send(packet);</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;<span class="keyword">finally</span> &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> !=socket)&#123;</div><div class="line">                    socket.close();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;).start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="UDP广播"><a href="#UDP广播" class="headerlink" title="UDP广播"></a>UDP广播</h3><p>广播就是发送信息给网络中内所有的计算机设备<br>广播的实现方法：在发送消息时，把主机IP地址修改为广播地址即可。</p>
+<p>广播地址，一般有两种：</p>
+<ol>
+<li>UDP有固定的广播地址：255.255.255.255</li>
+<li>另外，使用TCP/IP协议的网络，主机标识段host ID全为1的IP地址也为广播地址。如：我的局域网网段为192.168.1.0(255.255.255.0),广播地址为: 192.168.1.255。</li>
+</ol>
+<hr>
+<h3 id="UDP组播-多播"><a href="#UDP组播-多播" class="headerlink" title="UDP组播(多播)"></a>UDP组播(多播)</h3><p>组播，是让同一组的计算机设备都接收到信息。让具有相同需求功能的计算机设备，加入到同一组中，然后任一计算机发送组播信息，其他成员都能接收到。</p>
+<p>发送和接收信息，都必须使用组播地址（224.0.0.0~239.255.255.255）。计算机要加入该组，就必须加入该多播组地址。</p>
+<p>具有以下特点：</p>
+<ol>
+<li>它与广播都是UDP独有的；</li>
+<li>只有相同组的计算机设备才能接收到;</li>
+<li>发送和接收的套接字都是MulticastSocket。</li>
+</ol>
+<p>主要API（基本使用方法与DatagramSocket是一样的，就多了几个方法）：</p>
+<p>MulticastSocket：</p>
+<ul>
+<li>new MulticastSocket() —— 创建多播套接字，端口是系统给定的</li>
+<li>new MulticastSocket(int port) —— 创建绑定端口号到port的多播套接字</li>
+<li>new MulticastSocket(SocketAddress localAddr) —— 创建绑定到套接字地址localAddr的多播套接字</li>
+<li>setTimeToLive(int ttl) —— 设置time to live为ttl，默认为1。time to live可简单理解为可到达路由器的个数（详见下面总结）</li>
+<li>joinGroup(InetAddress groupAddr) —— 加入到组播地址groupAddr</li>
+<li>leaveGroup(InetAddress groupAddr) —— 离开组播地址groupAddr</li>
+<li>setSoTimeout(int timeout) —— 设置接收信息的超时时间</li>
+<li>send(DatagramPacket pack) —— 发送数据报</li>
+<li>receive(DatagramPacket pack) —— 接收数据报</li>
+</ul>
+<blockquote>
+<p>下面是发送和接收的demo代码。 </p>
+</blockquote>
+<p>发送：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendUdpMulticast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> String groupIP = <span class="string">"224.1.1.1"</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> port = <span class="number">8000</span>;</div><div class="line"></div><div class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            MulticastSocket mcSocket = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 1、创建组播套接字</span></div><div class="line">                mcSocket = <span class="keyword">new</span> MulticastSocket();</div><div class="line">                <span class="comment">// 设置TTL为1，套接字发送的范围为本地网络。默认也为1</span></div><div class="line">                mcSocket.setTimeToLive(<span class="number">1</span>);</div><div class="line"></div><div class="line">                <span class="comment">// 2、创建组播网络地址，并判断</span></div><div class="line">                InetAddress groupAddr = InetAddress.getByName(groupIP);</div><div class="line">                <span class="keyword">if</span> (!groupAddr.isMulticastAddress()) &#123;</div><div class="line">                    pushMsgToMain(UDP_HANDLER_MESSAGE_TOAST, <span class="string">"IP地址不是组播地址（224.0.0.0~239.255.255.255）"</span>);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="comment">// 3、让套接字加入到组播中</span></div><div class="line">                mcSocket.joinGroup(groupAddr);</div><div class="line"></div><div class="line">                <span class="comment">// 4、创建数据报</span></div><div class="line">                <span class="keyword">byte</span>[] data = (<span class="string">"Hi, I am Multicast of UDP"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>)));</div><div class="line">                DatagramPacket pack = <span class="keyword">new</span> DatagramPacket(data, data.length, groupAddr, port);</div><div class="line"></div><div class="line">                <span class="comment">// 5、发送信息</span></div><div class="line">                mcSocket.send(pack);</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> != mcSocket) &#123;</div><div class="line">                    mcSocket.close();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;).start();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接收:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> mIsUdpMulticastOn;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">receiveUdpMulticast</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> String groupIP = <span class="string">"224.1.1.1"</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> port = <span class="number">8000</span>;</div><div class="line"></div><div class="line">    <span class="keyword">new</span> Thread()&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            MulticastSocket mcSocket = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 1、创建多播套接字</span></div><div class="line">                mcSocket = <span class="keyword">new</span> MulticastSocket(port);</div><div class="line"></div><div class="line">                <span class="comment">// 2、创建多播组地址，并校验</span></div><div class="line">                InetAddress groupAddr = InetAddress.getByName(groupIP);</div><div class="line">                <span class="keyword">if</span> (!groupAddr.isMulticastAddress()) &#123;</div><div class="line">                    pushMsgToMain(UDP_HANDLER_MESSAGE_TOAST, <span class="string">"IP地址不是组播地址（224.0.0.0~239.255.255.255）"</span>);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="comment">// 3、把套接字加入到多播组中</span></div><div class="line">                mcSocket.joinGroup(groupAddr);</div><div class="line"></div><div class="line">                <span class="comment">// 4、创建数据报</span></div><div class="line">                <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">                DatagramPacket pack = <span class="keyword">new</span> DatagramPacket(data, data.length);</div><div class="line"></div><div class="line">                <span class="comment">// 5、接收信息。循环接收信息，并把接收到的数据交给主线程处理</span></div><div class="line">                mIsUdpMulticastOn = <span class="keyword">true</span>;</div><div class="line">                <span class="keyword">while</span> (mIsUdpMulticastOn) &#123;</div><div class="line">                    mcSocket.receive(pack);</div><div class="line">                    String rece = <span class="keyword">new</span> String(data, pack.getOffset(), pack.getLength());</div><div class="line">                    pushMsgToMain(UDP_HANDLER_MESSAGE_DATA, rece);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> != mcSocket) &#123;</div><div class="line">                    mcSocket.close();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="UDP总结"><a href="#UDP总结" class="headerlink" title="UDP总结"></a>UDP总结</h3><h4 id="UDP的数据data最大是多少"><a href="#UDP的数据data最大是多少" class="headerlink" title="UDP的数据data最大是多少"></a>UDP的数据data最大是多少</h4><p>经过测试，DatagramPacket中的数据data最大是<strong>65507</strong>，超过则会在发送的时候报错：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Exception:sendto failed: EMSGSIZE (Message too <span class="keyword">long</span>)</div></pre></td></tr></table></figure></p>
+<p>接收的data大小，可以超65536（2^16），但一般也没必要超过发送的最大值65507，最多65536。</p>
+<p><img src="http://img.blog.csdn.net/20160902235407042" alt="UPD大小分析"></p>
+<p>报头又包括IP包头（20字节）和UDP报文头（8字节</p>
+<p>所以，UDP数据的最大值 = 65535 - 20 - 8 = 65507</p>
+<h4 id="bind-与connect-的区别"><a href="#bind-与connect-的区别" class="headerlink" title="bind 与connect 的区别"></a>bind 与connect 的区别</h4><h5 id="1-bind-SocketAddress-addr"><a href="#1-bind-SocketAddress-addr" class="headerlink" title="1. bind(SocketAddress addr)"></a>1. bind(SocketAddress addr)</h5><p>将套接字绑定到特定的地址和端口，本地的绑定。 </p>
+<p>使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">DatagramSocket s = <span class="keyword">new</span> DatagramSocket(<span class="keyword">null</span>);</div><div class="line">SocketAddress local = <span class="keyword">new</span> InetSocketAddress(<span class="number">8888</span>);</div><div class="line">s.bind(local);</div></pre></td></tr></table></figure>
+<p>与此句代码等效：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DatagramSocket s = <span class="keyword">new</span> DatagramSocket(<span class="number">8888</span>);</div></pre></td></tr></table></figure></p>
+<p>使用说明：</p>
+<ul>
+<li>DatagramSocket如果绑定了端口，则不能再绑定，否则抛异常。<br>  如：<code>DatagramSocket s = new DatagramSocket(8000); s.bind(local);</code></li>
+<li>一般情况下，去绑定地址（就算与本机地址一样）也将报错。<br>  如：<code>SocketAddress local = new InetSocketAddress(&quot;192.168.1.222&quot;, 8888); s.bind(local);</code></li>
+</ul>
+<h5 id="2、connect-SocketAddress-addr"><a href="#2、connect-SocketAddress-addr" class="headerlink" title="2、connect(SocketAddress addr)"></a>2、connect(SocketAddress addr)</h5><p>将套接字连接到远程套接字地址（IP地址+端口号），连接对方。<br>使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">socket = <span class="keyword">new</span> DatagramSocket(<span class="number">8888</span>);</div><div class="line">SocketAddress local = <span class="keyword">new</span> InetSocketAddress(<span class="string">"192.168.1.145"</span>, <span class="number">8000</span>);</div><div class="line">socket.connect(local);</div><div class="line"><span class="keyword">byte</span>[] data = <span class="string">"Hello, I am Client"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(data, data.length);</div><div class="line">socket.send(packet);</div></pre></td></tr></table></figure>
+<p>与此代码等效：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">socket = <span class="keyword">new</span> DatagramSocket(<span class="number">8888</span>);</div><div class="line">SocketAddress socketAddr = <span class="keyword">new</span> InetSocketAddress(hostIP, port);</div><div class="line"><span class="keyword">byte</span>[] data = <span class="string">"Hello, I am Client"</span>.getBytes(Charset.forName(<span class="string">"UTF-8"</span>));</div><div class="line">DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(data, data.length, socketAddr);</div><div class="line">socket.send(packet);</div></pre></td></tr></table></figure>
+<h4 id="简单理解TTL"><a href="#简单理解TTL" class="headerlink" title="简单理解TTL"></a>简单理解TTL</h4><p>TTL（Time To Live）的作用是限制IP数据包在计算机网络中的存在的时间。TTL的最大值是255，TTL的一个推荐值是64。</p>
+<p>虽然TTL从字面上翻译，是可以存活的时间，但实际上TTL是IP数据包在计算机网络中可以转发的最大跳数。TTL字段由IP数据包的发送者设置，在IP数据包从源到目的的整个转发路径上，每经过一个路由器，路由器都会修改这个TTL字段值，具体的做法是把该TTL的值减1，然后再将IP包转发出去。如果在IP包到达目的IP之前，TTL减少为0，路由器将会丢弃收到的TTL=0的IP包并向IP包的发送者发送 ICMP time exceeded消息。 </p>
+<p>所以，TTL可以简单的理解为能达到路由器的个数。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/socket/" rel="tag"># socket</a>
+          
+            <a href="/tags/udp/" rel="tag"># udp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/shell-命令/" rel="next" title="shell 命令">
+                <i class="fa fa-chevron-left"></i> shell 命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/19/UDP-在局域网内搜索设备-原理/" rel="prev" title="UDP 在局域网内搜索设备(原理)">
+                UDP 在局域网内搜索设备(原理) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/uploads/title.jpg"
+              alt="chenzaidong" />
+          
+            <p class="site-author-name" itemprop="name">chenzaidong</p>
+            <p class="site-description motion-element" itemprop="description">有人爱 有事做 有所期待</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenzaidong" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。"><span class="nav-number">1.</span> <span class="nav-text">UDP发送数据，不管对方有没有收到，也就不需要把两个主机先连接好再通信。所以，UDP一般不用做自由通信用。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP服务器"><span class="nav-number">2.</span> <span class="nav-text">UDP服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP客户端"><span class="nav-number">3.</span> <span class="nav-text">UDP客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP广播"><span class="nav-number">4.</span> <span class="nav-text">UDP广播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP组播-多播"><span class="nav-number">5.</span> <span class="nav-text">UDP组播(多播)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP总结"><span class="nav-number">6.</span> <span class="nav-text">UDP总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP的数据data最大是多少"><span class="nav-number">6.1.</span> <span class="nav-text">UDP的数据data最大是多少</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bind-与connect-的区别"><span class="nav-number">6.2.</span> <span class="nav-text">bind 与connect 的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-bind-SocketAddress-addr"><span class="nav-number">6.2.1.</span> <span class="nav-text">1. bind(SocketAddress addr)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、connect-SocketAddress-addr"><span class="nav-number">6.2.2.</span> <span class="nav-text">2、connect(SocketAddress addr)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单理解TTL"><span class="nav-number">6.3.</span> <span class="nav-text">简单理解TTL</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chenzaidong</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FYNUsMEPesJqt3wytETgaIay-gzGzoHsz", "bvkSr2yvSYvCKO3aRdaPnAG6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

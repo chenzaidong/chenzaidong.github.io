@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,framework," />
 
 
 
@@ -96,16 +96,20 @@
 
 
 
-<meta name="description" content="有人爱 有事做 有所期待">
-<meta property="og:type" content="website">
-<meta property="og:title" content="陈明日的博客">
-<meta property="og:url" content="http://chenzd.cn/archives/2017/09/index.html">
+<meta name="description" content="源码结构">
+<meta name="keywords" content="Android,framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="framework学习笔记 (一)">
+<meta property="og:url" content="http://chenzd.cn/2017/10/19/framework学习笔记-一/index.html">
 <meta property="og:site_name" content="陈明日的博客">
-<meta property="og:description" content="有人爱 有事做 有所期待">
+<meta property="og:description" content="源码结构">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png">
+<meta property="og:updated_time" content="2017-10-19T14:23:21.808Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="陈明日的博客">
-<meta name="twitter:description" content="有人爱 有事做 有所期待">
+<meta name="twitter:title" content="framework学习笔记 (一)">
+<meta name="twitter:description" content="源码结构">
+<meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png">
 
 
 
@@ -135,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://chenzd.cn/archives/2017/09/"/>
+  <link rel="canonical" href="http://chenzd.cn/2017/10/19/framework学习笔记-一/"/>
 
 
 
 
 
-  <title>归档 | 陈明日的博客</title>
+  <title>framework学习笔记 (一) | 陈明日的博客</title>
   
 
 
@@ -160,7 +164,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -298,259 +302,300 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/10/19/framework学习笔记-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈明日的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">framework学习笔记 (一)</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T22:22:16+08:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 10 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
-      
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
 
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/10/19/framework学习笔记-一/" class="leancloud_visitors" data-flag-title="framework学习笔记 (一)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/shell-命令/" itemprop="url">
-              
-                <span itemprop="name">shell 命令</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T23:34:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava-四、背压/" itemprop="url">
-              
-                <span itemprop="name">RxJava 四、背压</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:27:12+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-三、操作符/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 三、操作符</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:26:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-二、线程调度/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0  二、线程调度</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:24:49+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png" alt="框架结构"></p>
+<a id="more"></a>
+<h3 id="Android-编译过程："><a href="#Android-编译过程：" class="headerlink" title="Android 编译过程："></a>Android 编译过程：</h3><ol>
+<li>初始化参数设置</li>
+<li>检查环境变量与目标环境</li>
+<li>选择lunch并读取目标和平台信息</li>
+<li>清空输出目录</li>
+<li>编译</li>
+<li>生成升级包</li>
+</ol>
+<blockquote>
+<p>例如：</p>
+<ol>
+<li>执行source build/envsetup.sh 脚本</li>
+<li>添加命令  mm mmm</li>
+<li>加载分支<br> lunch 选择分支  配置编译环境变量 输出目录</li>
+</ol>
+</blockquote>
+<h3 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h3><p> 基本：</p>
+<ol>
+<li>LOCAL_PATH := $(call my-dir)   定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_MODULE := test  编译生成的目标名称</li>
+<li>LOCAL_SRC_FILES := $(LOCAL_MODULE).apk 编译该模块需要的源文件</li>
+<li>include $(BUILD_PREBUILT)  编译所生成的目标文件格式</li>
+</ol>
+<h3 id="编译生成apk"><a href="#编译生成apk" class="headerlink" title="编译生成apk:"></a>编译生成apk:</h3><ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_SRC_FILES := $(call all-subdir-java-files) 调用工具将源码编译生成apk</li>
+<li>LOCAL_PACKAGE_NAME:= XXX 编译生成apk的名字<br>include $(BUILD_PACKAGE)  编译生成apk</li>
+</ul>
+<h3 id="编译生成jar包："><a href="#编译生成jar包：" class="headerlink" title="编译生成jar包："></a>编译生成jar包：</h3><ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_SRC_FILES := $(call all-subdir-java-files) 调用工具将源码编译生成apk</li>
+<li>LOCAL_MODULE ：= com.text.mjar jar包名字</li>
+<li>include $(BUILD_STATIC_JAVA_LIBRARY): 编译成静态jar包</li>
+<li><p>include $(BUILD_JAVA_LIBRARY): 编译生成共享jar包</p>
+</li>
+<li><p>静态jar包：include $(BUILD_STATIC_JAVA_LIBRARY)<br>使用.class 文件打包而成的jar文件，可以在任何java虚拟机运行</p>
+</li>
+<li><p>动态jar包：include $(BUILD_JAVA_LIBRARY)<br>在静态jar包基础之上使用.dex打包而成的jar文件，.dex是android系统使用的文件格式。</p>
+</li>
+<li><p>apk依赖于jar包：</p>
+<ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_STATIC_JAVA_LIBRARIES:= static-library 引入静态jar包</li>
+<li>LOCAL_JAVA_LIBRARIES:=share-library  映入动态jar包</li>
+<li>LOCAL_SRC_FILES:=$(call all-subdir-java-files)</li>
+<li>LOCAL_PACKAGE_NAME:=localPackage</li>
+<li>include $(BUILD_JAVA_LIBRARY): 编译生成共享jar包</li>
+</ul>
+</li>
+<li><p>预编译jar包：</p>
+<ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_MODULE_CLASS:=JAVA_LIBRARIES 指定编译生成文件类型</li>
+<li>LOCAL_MODULE ：= com.text.mjar jar包名字</li>
+<li>LOCAL_SRC_FILES := com.test.static</li>
+<li>include $(BUILD_PREBUILT)  预编译</li>
+</ul>
+</li>
+<li><p>LOCAL_MODULE_CLASS ：</p>
+<ul>
+<li>JAVA_LIBRARIES: dex归档文件</li>
+<li>APP：APK文件</li>
+<li>SHARED_LIBRARIES: 动态库文件</li>
+<li>EXECUTABLES: 二进制文件</li>
+<li>ETC： 其他文件格式</li>
+</ul>
+</li>
+</ul>
+<h3 id="Android-启动过程"><a href="#Android-启动过程" class="headerlink" title="Android 启动过程"></a>Android 启动过程</h3><ol>
+<li>Powon 上电</li>
+<li>bootloader</li>
+<li>uboot<ul>
+<li>初始化外设，引导内核启动</li>
+<li>设置启动参数</li>
+</ul>
+</li>
+<li>kernel(内核)<ul>
+<li>硬件设置</li>
+<li>驱动加载</li>
+<li>根据uboot配置参数启动系统</li>
+</ul>
+</li>
+<li>Android<ul>
+<li>挂载分区，创建目录<ul>
+<li>动态加载驱动</li>
+<li>启动系统服务</li>
+<li>配置环境变量</li>
+<li>守护系统</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Android启动模式："><a href="#Android启动模式：" class="headerlink" title="Android启动模式："></a>Android启动模式：</h3><ol>
+<li>recovery升级模式：启动recovery分区内核和系统文件</li>
+<li>正常启动模式：引导内核和启动Android系统</li>
+</ol>
+<h3 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h3><ul>
+<li>init进程源码位置：system/core/init/init.c</li>
+<li>init系统中位置：/init</li>
+</ul>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava2-0-一、基础/" itemprop="url">
-              
-                <span itemprop="name">RxJava2.0 一、基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:15:00+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/17/Android-TV-焦点框/" itemprop="url">
-              
-                <span itemprop="name">Android TV 焦点框</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-17T17:21:50+08:00"
-              content="2017-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/framework/" rel="tag"># framework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/19/UDP-在局域网内搜索设备-封装/" rel="next" title="UDP 在局域网内搜索设备(封装)">
+                <i class="fa fa-chevron-left"></i> UDP 在局域网内搜索设备(封装)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -558,6 +603,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -578,8 +629,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -652,6 +712,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#源码结构"><span class="nav-number">1.</span> <span class="nav-text">源码结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-编译过程："><span class="nav-number">2.</span> <span class="nav-text">Android 编译过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-mk"><span class="nav-number">3.</span> <span class="nav-text">Android.mk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译生成apk"><span class="nav-number">4.</span> <span class="nav-text">编译生成apk:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译生成jar包："><span class="nav-number">5.</span> <span class="nav-text">编译生成jar包：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-启动过程"><span class="nav-number">6.</span> <span class="nav-text">Android 启动过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android启动模式："><span class="nav-number">7.</span> <span class="nav-text">Android启动模式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动分析"><span class="nav-number">8.</span> <span class="nav-text">启动分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -805,6 +881,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
     
   
 
