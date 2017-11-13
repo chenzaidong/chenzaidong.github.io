@@ -313,6 +313,749 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/11/13/framework笔记三-启动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈在冬的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/13/framework笔记三-启动/" itemprop="url">framework笔记三 启动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-13T12:23:19+08:00">
+                2017-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/13/framework笔记三-启动/" class="leancloud_visitors" data-flag-title="framework笔记三 启动">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Android-启动过程"><a href="#Android-启动过程" class="headerlink" title="Android 启动过程"></a>Android 启动过程</h3><ol>
+<li><p>通电后，Bootloader 引导</p>
+<p> 在Bootloader运行期间，按下预定义的组合键，可以进入系统Fastboot模式和Recover模式。</p>
+</li>
+<li><p>装在和启动Linux内核</p>
+<p> Bootloader会吧boot.img映像装在进内存</p>
+</li>
+<li><p>启动Init进程</p>
+<ul>
+<li>Init进程是系统的第一个进程</li>
+<li>Init进程会解析Linux的配置脚本init.rc文件</li>
+<li>最后Init进程会作为守护进程来执行修改属性请求，启动崩溃的进程等操作</li>
+</ul>
+</li>
+<li><p>启动ServiceManager</p>
+<p> 主要作用是管理Binder服务，负责Binder服务的注册与查找</p>
+</li>
+<li><p>启动Zygote进程</p>
+<ul>
+<li>Zygote进程负责fork出应用进程，是所有应用进程的父进程</li>
+<li>创建Dalivik虚拟机，预装在系统的资源文件和Java类</li>
+<li>Zygote进程也将变成守护进程，负责响应启动APK应用程序的请求</li>
+</ul>
+</li>
+<li><p>启动SystemServer</p>
+<ul>
+<li>Zygote进程fork出的第一个进程，也是整个Android系统的核心进程</li>
+<li>首先启动本地服务SensorService，接着启动包括ActivityMangeerService、WindowsManagerService、PackageMangerService在内的所有Java服务</li>
+</ul>
+</li>
+<li><p>启动MediaServer</p>
+<p> MediaServer是有Init进程启动，包含多媒体相关的本地Binder服务，包括CameraService、AudioFlingerService、MediaPlagerService和AudioPolicyService。</p>
+</li>
+<li><p>启动Launcher</p>
+<p> SystemServer加载完所有Java服务后，最后会调用ActivityMangerService的SystemReady()方法。会发出Intent “android.intent.category.HOME”</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/11/13/framework笔记二-源码结构、Android-mk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈在冬的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/13/framework笔记二-源码结构、Android-mk/" itemprop="url">framework笔记二 源码结构、Android.mk</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-13T12:22:29+08:00">
+                2017-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/13/framework笔记二-源码结构、Android-mk/" class="leancloud_visitors" data-flag-title="framework笔记二 源码结构、Android.mk">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png" alt="框架结构"></p>
+<h3 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h3><p>分析一个典型文件: package/apps/Settings目录下的Android.mk：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">LOCAL_PATH:= $(call my-dir)             //设置LOCAL_PATH为当前目录</div><div class="line">include $(CLEAR_VARS)                   //清空除LCAL_PATH外所有"LOCAL_"变量</div><div class="line"></div><div class="line">LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt telephony-common //指定依赖的共享Java类库</div><div class="line">LOCAL_STATIC_JAVA_LIBRARIES := android-support-v4 android-support-v13 jsr305    //指定依赖的静态Java类库</div><div class="line"></div><div class="line">LOCAL_MODULE_TAGS := optional           //定义模块的标签为optional</div><div class="line"></div><div class="line">LOCAL_SRC_FILES := \                    //定义源文件列表</div><div class="line">        $(call all-java-files-under, src) \</div><div class="line">        src/com/android/settings/EventLogTags.logtags</div><div class="line"></div><div class="line">LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res     </div><div class="line"></div><div class="line">LOCAL_PACKAGE_NAME := Settings          //指定模块名称</div><div class="line">LOCAL_CERTIFICATE := platform           //指定模块签名使用paltform签名</div><div class="line">LOCAL_PRIVILEGED_MODULE := true         //true表示此apk将安装到priv-app下，Android4.4新标志</div><div class="line"></div><div class="line">LOCAL_PROGUARD_FLAG_FILES := proguard.flags     //指定混淆的标志</div><div class="line"></div><div class="line">include frameworks/opt/setupwizard/navigationbar/common.mk      </div><div class="line"></div><div class="line">include $(BUILD_PACKAGE)                //指定编译模块的类型为APK</div><div class="line"></div><div class="line"><span class="meta">#</span> Use the following include to make our test apk.       </div><div class="line">ifeq (,$(ONE_SHOT_MAKEFILE))</div><div class="line">include $(call all-makefiles-under,$(LOCAL_PATH))  //将源码目录下其余的Android.mk都包含进</div><div class="line">endif</div></pre></td></tr></table></figure></p>
+<p> 基本：</p>
+<ol>
+<li>LOCAL_PATH := $(call my-dir)   定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_MODULE := test  编译生成的目标名称</li>
+<li>LOCAL_SRC_FILES := $(LOCAL_MODULE).apk 编译该模块需要的源文件</li>
+<li>include $(BUILD_PREBUILT)  编译所生成的目标文件格式</li>
+</ol>
+<h3 id="编译生成apk"><a href="#编译生成apk" class="headerlink" title="编译生成apk:"></a>编译生成apk:</h3><ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_SRC_FILES := $(call all-subdir-java-files) 调用工具将源码编译生成apk</li>
+<li>LOCAL_PACKAGE_NAME:= XXX 编译生成apk的名字<br>include $(BUILD_PACKAGE)  编译生成apk</li>
+</ul>
+<h3 id="编译生成jar包："><a href="#编译生成jar包：" class="headerlink" title="编译生成jar包："></a>编译生成jar包：</h3><ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_SRC_FILES := $(call all-subdir-java-files) 调用工具将源码编译生成apk</li>
+<li>LOCAL_MODULE ：= com.text.mjar jar包名字</li>
+<li>include $(BUILD_STATIC_JAVA_LIBRARY): 编译成静态jar包</li>
+<li><p>include $(BUILD_JAVA_LIBRARY): 编译生成共享jar包</p>
+</li>
+<li><p>静态jar包：include $(BUILD_STATIC_JAVA_LIBRARY)<br>使用.class 文件打包而成的jar文件，可以在任何java虚拟机运行</p>
+</li>
+<li><p>动态jar包：include $(BUILD_JAVA_LIBRARY)<br>在静态jar包基础之上使用.dex打包而成的jar文件，.dex是android系统使用的文件格式。</p>
+</li>
+<li><p>apk依赖于jar包：</p>
+<ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_STATIC_JAVA_LIBRARIES:= static-library 引入静态jar包</li>
+<li>LOCAL_JAVA_LIBRARIES:=share-library  映入动态jar包</li>
+<li>LOCAL_SRC_FILES:=$(call all-subdir-java-files)</li>
+<li>LOCAL_PACKAGE_NAME:=localPackage</li>
+<li>include $(BUILD_JAVA_LIBRARY): 编译生成共享jar包</li>
+</ul>
+</li>
+<li><p>预编译jar包：</p>
+<ul>
+<li>LOCAL_PATH := $(call my-dir)    定义了当前模块的相对路径</li>
+<li>include $(CLEAR_VARS)  清除当前环境变量 除了LOCAL_PATH </li>
+<li>LOCAL_MODULE_CLASS:=JAVA_LIBRARIES 指定编译生成文件类型</li>
+<li>LOCAL_MODULE ：= com.text.mjar jar包名字</li>
+<li>LOCAL_SRC_FILES := com.test.static</li>
+<li>include $(BUILD_PREBUILT)  预编译</li>
+</ul>
+</li>
+<li><p>LOCAL_MODULE_CLASS ：</p>
+<ul>
+<li>JAVA_LIBRARIES: dex归档文件</li>
+<li>APP：APK文件</li>
+<li>SHARED_LIBRARIES: 动态库文件</li>
+<li>EXECUTABLES: 二进制文件</li>
+<li>ETC： 其他文件格式</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/11/13/framework笔记-一-编译过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈在冬的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/13/framework笔记-一-编译过程/" itemprop="url">framework笔记 一 编译过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-13T12:21:04+08:00">
+                2017-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/13/framework笔记-一-编译过程/" class="leancloud_visitors" data-flag-title="framework笔记 一 编译过程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/mr-raptor/archive/2012/06/07/2540359.html" target="_blank" rel="external">原文地址</a></p>
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>按照google给出的编译步骤如下：</p>
+<ol>
+<li><code>source build/envsetup.sh</code>加载命令</li>
+<li><code>lunch</code>选择平台编译选项</li>
+<li><code>make</code> 执行编译</li>
+</ol>
+<h4 id="1-source-build-envsetup-sh"><a href="#1-source-build-envsetup-sh" class="headerlink" title="1. source build/envsetup.sh"></a>1. source build/envsetup.sh</h4><p>这个命令是用来将envsetup.sh里的所有用到的命令加载到环境变量里去</p>
+<p><code>envsetup.sh</code>其主要作用如下：</p>
+<ol>
+<li>加载了编译时使用到的函数命令，如：help，lunch，m，mm，mmm等</li>
+<li>添加了两个编译选项：generic-eng和simulator，这两个选项是系统默认选项</li>
+<li>查找vendor(device)/&lt;-厂商目录&gt;/和vendor(device)/&lt;厂商目录&gt;/build/目录下的vendorsetup.sh，如果存在的话，加载执行它，添加厂商自己定义产品的编译选项</li>
+</ol>
+<p>其中包括下面的代码很重要，它要从<code>device</code> 和 <code>vendor</code>目录下查找<code>vendorsetup.sh</code>文件，如果查到了，就加载它</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> Execute the contents of any vendorsetup.sh files we can find.</div><div class="line">for f in `test -d device &amp;&amp; find -L device -maxdepth 4 -name 'vendorsetup.sh' 2&gt; /dev/null` \</div><div class="line">         `test -d vendor &amp;&amp; find -L vendor -maxdepth 4 -name 'vendorsetup.sh' 2&gt; /dev/null`</div><div class="line">do</div><div class="line">    echo "including $f"</div><div class="line">    . $f</div><div class="line">done</div><div class="line">unset f</div></pre></td></tr></table></figure>
+<h4 id="2-lunch"><a href="#2-lunch" class="headerlink" title="2. lunch"></a>2. lunch</h4><p>所以如果要想定义自己的产品编译项，在厂商目录下新建一个项目文件夹，然后新建一个<code>vendorsetup.sh</code>，在里面添加上自己的产品编译项，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">add_lunch_combo xxx_xxx_xxx</div></pre></td></tr></table></figure></p>
+<p>这样，当我们在执行<code>source build/envsetup.sh</code>命令的时候，可以在shell上看到下面的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">including device/mstar/xxx/vendorsetup.sh</div></pre></td></tr></table></figure></p>
+<p>然后执行<code>lunch</code>命令，shell上看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">You&apos;re building on Linux</div><div class="line"></div><div class="line">Lunch menu... pick a combo:</div><div class="line">     1. aosp_arm-eng</div><div class="line">     2. aosp_arm64-eng</div><div class="line">     3. aosp_mips-eng</div><div class="line">     4. aosp_mips64-eng</div><div class="line">     5. aosp_x86-eng</div><div class="line">     6. aosp_x86_64-eng</div><div class="line">     7. aosp_ican_m2-userdebug</div><div class="line">     8. mstaraddon-eng</div><div class="line">     9. aosp_tomato-userdebug</div><div class="line">     </div><div class="line">     ...</div><div class="line">     1x. xxx_xxx_xxx</div></pre></td></tr></table></figure></p>
+<p>上面可以看到<code>xxx-eng</code><br>前面xxx表示产品名称，eng是产品编译类型</p>
+<ul>
+<li>eng   工程机</li>
+<li>user  最终用户机</li>
+<li>userdebug 调试测试机</li>
+</ul>
+<h4 id="3-make"><a href="#3-make" class="headerlink" title="3. make"></a>3. make</h4><p>执行<code>make</code>命令的结果就是去执行当前目录下的<code>Makefile</code>文件，我们来看下它的内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>## DO NOT EDIT THIS FILE ###</div><div class="line">include build/core/main.mk</div><div class="line"><span class="meta">#</span>## DO NOT EDIT THIS FILE ###</div></pre></td></tr></table></figure>
+<p>再看下build/core/main.mk</p>
+<p><code>main.mk</code>文件是Android Build系统的主控文件，从<code>main.mk</code>开始，将通过include命令将其所有需要的.mk文件包含进来，最终在内存中形成一个包括所有编译脚本的集合。</p>
+<blockquote>
+<p>Build系统主要编译脚本介绍 在《深入解析Android系统5.0》 <code>17</code>页</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>main.mk</td>
+<td>Android Build系统的主控文件。该文件主要作用是包含进其他mk文件，以及定义几个最重要的便宜目标，如droid、sdk、ndk等。同事检查编译工具的版本，如make、gcc、javac等</td>
+</tr>
+<tr>
+<td>help.mk</td>
+<td>Android Build系统的帮助。输入“make help”会打印出Build系统的使用说明</td>
+</tr>
+<tr>
+<td>envsetup.mk</td>
+<td>包含进produc_config.mk文件并根据其内容涉笔编译产品所需要的环境变量，并检查这些变量值的合法性，同时还指定了各种编译结果的输出路径</td>
+</tr>
+<tr>
+<td>product_config.mk</td>
+<td>包含进了系统中所有AndroidProdut.mk文件，并根据当前产品的配置文件来设置产品编译相关的变量</td>
+</tr>
+<tr>
+<td>product.mk</td>
+<td>定义product_config文件中使用的各种函数</td>
+</tr>
+<tr>
+<td>combo/select.mk</td>
+<td>根据环境变量设置，指定对应的系统和架构中所使用的编译工具路径</td>
+</tr>
+<tr>
+<td>clang/config.mk</td>
+<td>定义了LLVM编译器clang在不同架构下的路径和参数</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Makefile</td>
+<td>定义了系统最终编译完成所需要的各种目标和规则</td>
+</tr>
+</tbody>
+</table>
+<h4 id="make缺省编译目标是droid"><a href="#make缺省编译目标是droid" class="headerlink" title="make缺省编译目标是droid."></a>make缺省编译目标是droid.</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> Building a full system-- the default is to build droidcore</div><div class="line">droid: droidcore dist_files</div><div class="line"></div><div class="line">droidcore: files \</div><div class="line">	systemimage \                           //用来产生system.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_BOOTIMAGE_TARGET) \         //用来产生bootimg</div><div class="line"><span class="meta">	$</span>(INSTALLED_RECOVERYIMAGE_TARGET) \     //用来产生recover.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_USERDATAIMAGE_TARGET) \     //用来产生userdata.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_CACHEIMAGE_TARGET) \        //用来产生cache.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_VENDORIMAGE_TARGET) \       //用来产生vendor.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_FILES_FILE)                 //用来产生installed-files.txt文件，该文件将会放在out/target/product/&lt;product_name&gt;下。文件的内容是当前产品配置将要那幢的所有文件列表</div><div class="line">	</div><div class="line">files: prebuilt \</div><div class="line">        $(modules_to_install) \             //modules_to_intall 变量是当前产品配置下所有将要安装的模块的列表。因此，该目标将导致所有这些模块编译</div><div class="line">        $(INSTALLED_ANDROID_INFO_TXT_TARGET)//用来产生名为android-info.txt文件，该文件将会存放在out/target/product/&lt;product_name&gt;下。文件的内容是当前产品的设备信息</div><div class="line"></div><div class="line">prebuilt: $(ALL_PREBUILT)                   //用来产生所有在变量GRANDFATHERED_ALL_PREBUILT中的文件</div></pre></td></tr></table></figure>
+<p>除了droid及其相关目标，Build系统里还有很多可以独立使用的目标：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>make clean</td>
+<td>清除所有编译结果，相当于”rm out -rf”</td>
+</tr>
+<tr>
+<td>make snod</td>
+<td>重新生成最终的image温家U呢，但是不再重新编译模块</td>
+</tr>
+<tr>
+<td>make help</td>
+<td>打印build系统简单的帮助信息</td>
+</tr>
+<tr>
+<td>make sdk</td>
+<td>生成Android SDK</td>
+</tr>
+<tr>
+<td>make offline-sdk-docs</td>
+<td>为SDK生成HTML版的文档</td>
+</tr>
+<tr>
+<td>make doc-comment-check-docs</td>
+<td>检查HTML doc是否有效，但是不生成HTML</td>
+</tr>
+<tr>
+<td>make libandroid_runtime</td>
+<td>编译出所有framework的JNT库</td>
+</tr>
+<tr>
+<td>make framework</td>
+<td>编译出所有framework的jar包</td>
+</tr>
+<tr>
+<td>make services</td>
+<td>编译出系统服务及相关的模块</td>
+</tr>
+<tr>
+<td>make update-api</td>
+<td>添加系统API或者修改@hide的API后，需要执行，然后再make</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Android-的产品配置文件"><a href="#Android-的产品配置文件" class="headerlink" title="Android 的产品配置文件"></a>Android 的产品配置文件</h3><h4 id="如果用户想个性定制自己的产品，应该有以下流程："><a href="#如果用户想个性定制自己的产品，应该有以下流程：" class="headerlink" title="如果用户想个性定制自己的产品，应该有以下流程："></a>如果用户想个性定制自己的产品，应该有以下流程：</h4><ol>
+<li>创建公司项目目录</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir device/mstar/xxx_x1</div></pre></td></tr></table></figure>
+<ol>
+<li>创建一个<code>vendorsetup.sh</code>文件，将当前产品编译项添加到lunch里，让lunch能找到用户个性定制的编译项.</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo "add_lunch_combo xxx_x1-userdebug" &gt; device/xxx_x1/vendorsetup.sh</div></pre></td></tr></table></figure>
+<ol>
+<li>仿着Android示例代码，创建2个mk文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch device/xxx_x1/AnroidProduct.mk device/xxx_x1/xxx_x1.ml</div></pre></td></tr></table></figure>
+<p>4.在AndroidProduct.mk里添加如下内容，表示只有一个产品<code>xxx_x1</code>，它对应的配置文件在当前目录下的<code>xxx_x1.mk</code>。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PRODUCT_MAKEFILES := \</div><div class="line">    $(LOCAL_DIR)/xxx_x1.mk</div></pre></td></tr></table></figure></p>
+<p>5.在产品配置文件添加最基本信息<code>xxx_x1.mk</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> Inherit from hardware-specific part of the product configuration.</div><div class="line"><span class="meta">$</span>(call inherit-product, device/mstar/xxx_x1/device.mk)</div><div class="line"><span class="meta">#</span> Set those variables here to overwrite the inherited values.</div><div class="line">PRODUCT_NAME := xxx_x1                                      //产品名称</div><div class="line">PRODUCT_DEVICE := xxx_x1                                    //产品设备名称</div><div class="line">PRODUCT_BRAND := MStar                                      //产品的品牌</div><div class="line">PRODUCT_MODEL := MStar Android TV                           //产品型号</div><div class="line">PRODUCT_MANUFACTURER := MStar Semiconductor, Inc.           //产品制造商</div></pre></td></tr></table></figure></p>
+<p>6.BoardConifg.mk</p>
+<p><code>BoardConifg.mk</code>文件被Build系统的envsetup.sh文件包含进去，这个文件主要定义了设备硬件(包括CPU、WIFI、GPS等)相关的一些参数</p>
+<p>7.device.mk</p>
+<p><code>device.mk</code> 是产品配置中经常需要修改的一个文件。产品定义中需要包含进的模块，文件以及各种环境变量的定义一般都放在这个文件里。<br><code>device.mk</code>中一些重要的编译变量如下：</p>
+<ul>
+<li>DEVICE_SOURCES: 源文件位置</li>
+<li>PRODUCT_COPY_FILES： 一个格式为”源文件路径：目标文件路径“字符串的集合。使用PRODUCT_COPY_FILES变量能方便地编译目录下的一个文件复制到目标文件系统中</li>
+<li>PRODUCT_PROPERTY_OVERRIDES：定义系统的数属性值。一旦设置，不能改变<ul>
+<li>”ro.“ 开头，属性是只读属性</li>
+<li>”persist.“ 开头，值将写入/data/property中。可读可写</li>
+</ul>
+</li>
+<li>PRODUCT_PACKAGES：用来定义产品的模块列表，所有在模块列表中的模块的定义都会被执行</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/10/24/蓝牙开发-传统蓝牙API的使用一、-启用，发现，查找设备/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -617,174 +1360,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/10/20/AIDL的使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/10/19/framework学习笔记-一/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenzaidong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/title.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈在冬的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/19/framework学习笔记-一/" itemprop="url">framework学习笔记 (一)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T22:22:16+08:00">
-                2017-10-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Android 学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/10/19/framework学习笔记-一/" class="leancloud_visitors" data-flag-title="framework学习笔记 (一)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png" alt="框架结构"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/19/framework学习笔记-一/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1659,342 +2234,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/09/19/RxJava2-0-三、操作符/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenzaidong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/title.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈在冬的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/RxJava2-0-三、操作符/" itemprop="url">RxJava2.0 三、操作符</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T19:26:46+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Android 学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/19/RxJava2-0-三、操作符/" class="leancloud_visitors" data-flag-title="RxJava2.0 三、操作符">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg" alt="RxJava"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/19/RxJava2-0-三、操作符/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/09/19/RxJava2-0-二、线程调度/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="chenzaidong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/title.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈在冬的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/RxJava2-0-二、线程调度/" itemprop="url">RxJava2.0  二、线程调度</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T19:24:49+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Android 学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/19/RxJava2-0-二、线程调度/" class="leancloud_visitors" data-flag-title="RxJava2.0  二、线程调度">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://osgun3ytd.bkt.clouddn.com/RxJava.jpg" alt="RxJava"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/19/RxJava2-0-二、线程调度/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2048,7 +2287,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

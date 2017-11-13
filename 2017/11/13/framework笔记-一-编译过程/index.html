@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,framework," />
 
 
 
@@ -96,16 +96,18 @@
 
 
 
-<meta name="description" content="有人爱 有事做 有所期待">
-<meta property="og:type" content="website">
-<meta property="og:title" content="陈在冬的博客">
-<meta property="og:url" content="http://chenzd.cn/archives/2017/index.html">
+<meta name="description" content="原文地址 编译过程按照google给出的编译步骤如下：  source build/envsetup.sh加载命令 lunch选择平台编译选项 make 执行编译  1. source build/envsetup.sh这个命令是用来将envsetup.sh里的所有用到的命令加载到环境变量里去 envsetup.sh其主要作用如下：  加载了编译时使用到的函数命令，如：help，lunch，m，m">
+<meta name="keywords" content="Android,framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="framework笔记 一 编译过程">
+<meta property="og:url" content="http://chenzd.cn/2017/11/13/framework笔记-一-编译过程/index.html">
 <meta property="og:site_name" content="陈在冬的博客">
-<meta property="og:description" content="有人爱 有事做 有所期待">
+<meta property="og:description" content="原文地址 编译过程按照google给出的编译步骤如下：  source build/envsetup.sh加载命令 lunch选择平台编译选项 make 执行编译  1. source build/envsetup.sh这个命令是用来将envsetup.sh里的所有用到的命令加载到环境变量里去 envsetup.sh其主要作用如下：  加载了编译时使用到的函数命令，如：help，lunch，m，m">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-13T04:21:57.305Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="陈在冬的博客">
-<meta name="twitter:description" content="有人爱 有事做 有所期待">
+<meta name="twitter:title" content="framework笔记 一 编译过程">
+<meta name="twitter:description" content="原文地址 编译过程按照google给出的编译步骤如下：  source build/envsetup.sh加载命令 lunch选择平台编译选项 make 执行编译  1. source build/envsetup.sh这个命令是用来将envsetup.sh里的所有用到的命令加载到环境变量里去 envsetup.sh其主要作用如下：  加载了编译时使用到的函数命令，如：help，lunch，m，m">
 
 
 
@@ -135,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://chenzd.cn/archives/2017/"/>
+  <link rel="canonical" href="http://chenzd.cn/2017/11/13/framework笔记-一-编译过程/"/>
 
 
 
 
 
-  <title>归档 | 陈在冬的博客</title>
+  <title>framework笔记 一 编译过程 | 陈在冬的博客</title>
   
 
 
@@ -160,7 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -298,411 +300,354 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenzd.cn/2017/11/13/framework笔记-一-编译过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chenzaidong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/title.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈在冬的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">framework笔记 一 编译过程</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-13T12:21:04+08:00">
+                2017-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 14 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
-      
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Android-学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 学习笔记</span>
+                  </a>
+                </span>
 
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/11/13/framework笔记-一-编译过程/" class="leancloud_visitors" data-flag-title="framework笔记 一 编译过程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/13/framework笔记三-启动/" itemprop="url">
-              
-                <span itemprop="name">framework笔记三 启动</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-13T12:23:19+08:00"
-              content="2017-11-13" >
-          11-13
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/13/framework笔记二-源码结构、Android-mk/" itemprop="url">
-              
-                <span itemprop="name">framework笔记二 源码结构、Android.mk</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-13T12:22:29+08:00"
-              content="2017-11-13" >
-          11-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/13/framework笔记-一-编译过程/" itemprop="url">
-              
-                <span itemprop="name">framework笔记 一 编译过程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-13T12:21:04+08:00"
-              content="2017-11-13" >
-          11-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/24/蓝牙开发-传统蓝牙API的使用一、-启用，发现，查找设备/" itemprop="url">
-              
-                <span itemprop="name">蓝牙开发  传统蓝牙API的使用一、(启用，发现，查找设备)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-24T20:51:22+08:00"
-              content="2017-10-24" >
-          10-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><a href="http://www.cnblogs.com/mr-raptor/archive/2012/06/07/2540359.html" target="_blank" rel="external">原文地址</a></p>
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h2><p>按照google给出的编译步骤如下：</p>
+<ol>
+<li><code>source build/envsetup.sh</code>加载命令</li>
+<li><code>lunch</code>选择平台编译选项</li>
+<li><code>make</code> 执行编译</li>
+</ol>
+<h4 id="1-source-build-envsetup-sh"><a href="#1-source-build-envsetup-sh" class="headerlink" title="1. source build/envsetup.sh"></a>1. source build/envsetup.sh</h4><p>这个命令是用来将envsetup.sh里的所有用到的命令加载到环境变量里去</p>
+<p><code>envsetup.sh</code>其主要作用如下：</p>
+<ol>
+<li>加载了编译时使用到的函数命令，如：help，lunch，m，mm，mmm等</li>
+<li>添加了两个编译选项：generic-eng和simulator，这两个选项是系统默认选项</li>
+<li>查找vendor(device)/&lt;-厂商目录&gt;/和vendor(device)/&lt;厂商目录&gt;/build/目录下的vendorsetup.sh，如果存在的话，加载执行它，添加厂商自己定义产品的编译选项</li>
+</ol>
+<p>其中包括下面的代码很重要，它要从<code>device</code> 和 <code>vendor</code>目录下查找<code>vendorsetup.sh</code>文件，如果查到了，就加载它</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> Execute the contents of any vendorsetup.sh files we can find.</div><div class="line">for f in `test -d device &amp;&amp; find -L device -maxdepth 4 -name 'vendorsetup.sh' 2&gt; /dev/null` \</div><div class="line">         `test -d vendor &amp;&amp; find -L vendor -maxdepth 4 -name 'vendorsetup.sh' 2&gt; /dev/null`</div><div class="line">do</div><div class="line">    echo "including $f"</div><div class="line">    . $f</div><div class="line">done</div><div class="line">unset f</div></pre></td></tr></table></figure>
+<h4 id="2-lunch"><a href="#2-lunch" class="headerlink" title="2. lunch"></a>2. lunch</h4><p>所以如果要想定义自己的产品编译项，在厂商目录下新建一个项目文件夹，然后新建一个<code>vendorsetup.sh</code>，在里面添加上自己的产品编译项，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">add_lunch_combo xxx_xxx_xxx</div></pre></td></tr></table></figure></p>
+<p>这样，当我们在执行<code>source build/envsetup.sh</code>命令的时候，可以在shell上看到下面的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">including device/mstar/xxx/vendorsetup.sh</div></pre></td></tr></table></figure></p>
+<p>然后执行<code>lunch</code>命令，shell上看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">You&apos;re building on Linux</div><div class="line"></div><div class="line">Lunch menu... pick a combo:</div><div class="line">     1. aosp_arm-eng</div><div class="line">     2. aosp_arm64-eng</div><div class="line">     3. aosp_mips-eng</div><div class="line">     4. aosp_mips64-eng</div><div class="line">     5. aosp_x86-eng</div><div class="line">     6. aosp_x86_64-eng</div><div class="line">     7. aosp_ican_m2-userdebug</div><div class="line">     8. mstaraddon-eng</div><div class="line">     9. aosp_tomato-userdebug</div><div class="line">     </div><div class="line">     ...</div><div class="line">     1x. xxx_xxx_xxx</div></pre></td></tr></table></figure></p>
+<p>上面可以看到<code>xxx-eng</code><br>前面xxx表示产品名称，eng是产品编译类型</p>
+<ul>
+<li>eng   工程机</li>
+<li>user  最终用户机</li>
+<li>userdebug 调试测试机</li>
+</ul>
+<h4 id="3-make"><a href="#3-make" class="headerlink" title="3. make"></a>3. make</h4><p>执行<code>make</code>命令的结果就是去执行当前目录下的<code>Makefile</code>文件，我们来看下它的内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>## DO NOT EDIT THIS FILE ###</div><div class="line">include build/core/main.mk</div><div class="line"><span class="meta">#</span>## DO NOT EDIT THIS FILE ###</div></pre></td></tr></table></figure>
+<p>再看下build/core/main.mk</p>
+<p><code>main.mk</code>文件是Android Build系统的主控文件，从<code>main.mk</code>开始，将通过include命令将其所有需要的.mk文件包含进来，最终在内存中形成一个包括所有编译脚本的集合。</p>
+<blockquote>
+<p>Build系统主要编译脚本介绍 在《深入解析Android系统5.0》 <code>17</code>页</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>main.mk</td>
+<td>Android Build系统的主控文件。该文件主要作用是包含进其他mk文件，以及定义几个最重要的便宜目标，如droid、sdk、ndk等。同事检查编译工具的版本，如make、gcc、javac等</td>
+</tr>
+<tr>
+<td>help.mk</td>
+<td>Android Build系统的帮助。输入“make help”会打印出Build系统的使用说明</td>
+</tr>
+<tr>
+<td>envsetup.mk</td>
+<td>包含进produc_config.mk文件并根据其内容涉笔编译产品所需要的环境变量，并检查这些变量值的合法性，同时还指定了各种编译结果的输出路径</td>
+</tr>
+<tr>
+<td>product_config.mk</td>
+<td>包含进了系统中所有AndroidProdut.mk文件，并根据当前产品的配置文件来设置产品编译相关的变量</td>
+</tr>
+<tr>
+<td>product.mk</td>
+<td>定义product_config文件中使用的各种函数</td>
+</tr>
+<tr>
+<td>combo/select.mk</td>
+<td>根据环境变量设置，指定对应的系统和架构中所使用的编译工具路径</td>
+</tr>
+<tr>
+<td>clang/config.mk</td>
+<td>定义了LLVM编译器clang在不同架构下的路径和参数</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Makefile</td>
+<td>定义了系统最终编译完成所需要的各种目标和规则</td>
+</tr>
+</tbody>
+</table>
+<h4 id="make缺省编译目标是droid"><a href="#make缺省编译目标是droid" class="headerlink" title="make缺省编译目标是droid."></a>make缺省编译目标是droid.</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> Building a full system-- the default is to build droidcore</div><div class="line">droid: droidcore dist_files</div><div class="line"></div><div class="line">droidcore: files \</div><div class="line">	systemimage \                           //用来产生system.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_BOOTIMAGE_TARGET) \         //用来产生bootimg</div><div class="line"><span class="meta">	$</span>(INSTALLED_RECOVERYIMAGE_TARGET) \     //用来产生recover.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_USERDATAIMAGE_TARGET) \     //用来产生userdata.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_CACHEIMAGE_TARGET) \        //用来产生cache.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_VENDORIMAGE_TARGET) \       //用来产生vendor.img</div><div class="line"><span class="meta">	$</span>(INSTALLED_FILES_FILE)                 //用来产生installed-files.txt文件，该文件将会放在out/target/product/&lt;product_name&gt;下。文件的内容是当前产品配置将要那幢的所有文件列表</div><div class="line">	</div><div class="line">files: prebuilt \</div><div class="line">        $(modules_to_install) \             //modules_to_intall 变量是当前产品配置下所有将要安装的模块的列表。因此，该目标将导致所有这些模块编译</div><div class="line">        $(INSTALLED_ANDROID_INFO_TXT_TARGET)//用来产生名为android-info.txt文件，该文件将会存放在out/target/product/&lt;product_name&gt;下。文件的内容是当前产品的设备信息</div><div class="line"></div><div class="line">prebuilt: $(ALL_PREBUILT)                   //用来产生所有在变量GRANDFATHERED_ALL_PREBUILT中的文件</div></pre></td></tr></table></figure>
+<p>除了droid及其相关目标，Build系统里还有很多可以独立使用的目标：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>make clean</td>
+<td>清除所有编译结果，相当于”rm out -rf”</td>
+</tr>
+<tr>
+<td>make snod</td>
+<td>重新生成最终的image温家U呢，但是不再重新编译模块</td>
+</tr>
+<tr>
+<td>make help</td>
+<td>打印build系统简单的帮助信息</td>
+</tr>
+<tr>
+<td>make sdk</td>
+<td>生成Android SDK</td>
+</tr>
+<tr>
+<td>make offline-sdk-docs</td>
+<td>为SDK生成HTML版的文档</td>
+</tr>
+<tr>
+<td>make doc-comment-check-docs</td>
+<td>检查HTML doc是否有效，但是不生成HTML</td>
+</tr>
+<tr>
+<td>make libandroid_runtime</td>
+<td>编译出所有framework的JNT库</td>
+</tr>
+<tr>
+<td>make framework</td>
+<td>编译出所有framework的jar包</td>
+</tr>
+<tr>
+<td>make services</td>
+<td>编译出系统服务及相关的模块</td>
+</tr>
+<tr>
+<td>make update-api</td>
+<td>添加系统API或者修改@hide的API后，需要执行，然后再make</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Android-的产品配置文件"><a href="#Android-的产品配置文件" class="headerlink" title="Android 的产品配置文件"></a>Android 的产品配置文件</h3><h4 id="如果用户想个性定制自己的产品，应该有以下流程："><a href="#如果用户想个性定制自己的产品，应该有以下流程：" class="headerlink" title="如果用户想个性定制自己的产品，应该有以下流程："></a>如果用户想个性定制自己的产品，应该有以下流程：</h4><ol>
+<li>创建公司项目目录</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir device/mstar/xxx_x1</div></pre></td></tr></table></figure>
+<ol>
+<li>创建一个<code>vendorsetup.sh</code>文件，将当前产品编译项添加到lunch里，让lunch能找到用户个性定制的编译项.</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo "add_lunch_combo xxx_x1-userdebug" &gt; device/xxx_x1/vendorsetup.sh</div></pre></td></tr></table></figure>
+<ol>
+<li>仿着Android示例代码，创建2个mk文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch device/xxx_x1/AnroidProduct.mk device/xxx_x1/xxx_x1.ml</div></pre></td></tr></table></figure>
+<p>4.在AndroidProduct.mk里添加如下内容，表示只有一个产品<code>xxx_x1</code>，它对应的配置文件在当前目录下的<code>xxx_x1.mk</code>。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PRODUCT_MAKEFILES := \</div><div class="line">    $(LOCAL_DIR)/xxx_x1.mk</div></pre></td></tr></table></figure></p>
+<p>5.在产品配置文件添加最基本信息<code>xxx_x1.mk</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> Inherit from hardware-specific part of the product configuration.</div><div class="line"><span class="meta">$</span>(call inherit-product, device/mstar/xxx_x1/device.mk)</div><div class="line"><span class="meta">#</span> Set those variables here to overwrite the inherited values.</div><div class="line">PRODUCT_NAME := xxx_x1                                      //产品名称</div><div class="line">PRODUCT_DEVICE := xxx_x1                                    //产品设备名称</div><div class="line">PRODUCT_BRAND := MStar                                      //产品的品牌</div><div class="line">PRODUCT_MODEL := MStar Android TV                           //产品型号</div><div class="line">PRODUCT_MANUFACTURER := MStar Semiconductor, Inc.           //产品制造商</div></pre></td></tr></table></figure></p>
+<p>6.BoardConifg.mk</p>
+<p><code>BoardConifg.mk</code>文件被Build系统的envsetup.sh文件包含进去，这个文件主要定义了设备硬件(包括CPU、WIFI、GPS等)相关的一些参数</p>
+<p>7.device.mk</p>
+<p><code>device.mk</code> 是产品配置中经常需要修改的一个文件。产品定义中需要包含进的模块，文件以及各种环境变量的定义一般都放在这个文件里。<br><code>device.mk</code>中一些重要的编译变量如下：</p>
+<ul>
+<li>DEVICE_SOURCES: 源文件位置</li>
+<li>PRODUCT_COPY_FILES： 一个格式为”源文件路径：目标文件路径“字符串的集合。使用PRODUCT_COPY_FILES变量能方便地编译目录下的一个文件复制到目标文件系统中</li>
+<li>PRODUCT_PROPERTY_OVERRIDES：定义系统的数属性值。一旦设置，不能改变<ul>
+<li>”ro.“ 开头，属性是只读属性</li>
+<li>”persist.“ 开头，值将写入/data/property中。可读可写</li>
+</ul>
+</li>
+<li>PRODUCT_PACKAGES：用来定义产品的模块列表，所有在模块列表中的模块的定义都会被执行</li>
+</ul>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/20/AIDL的使用/" itemprop="url">
-              
-                <span itemprop="name">AIDL的使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-20T19:43:03+08:00"
-              content="2017-10-20" >
-          10-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/19/UDP-在局域网内搜索设备-封装/" itemprop="url">
-              
-                <span itemprop="name">UDP 在局域网内搜索设备(封装)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-19T22:18:31+08:00"
-              content="2017-10-19" >
-          10-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/19/UDP-在局域网内搜索设备-原理/" itemprop="url">
-              
-                <span itemprop="name">UDP 在局域网内搜索设备(原理)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-19T22:18:08+08:00"
-              content="2017-10-19" >
-          10-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/19/UDP基础/" itemprop="url">
-              
-                <span itemprop="name">UDP基础</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-19T22:14:14+08:00"
-              content="2017-10-19" >
-          10-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/shell-命令/" itemprop="url">
-              
-                <span itemprop="name">shell 命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T23:34:46+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/19/RxJava-四、背压/" itemprop="url">
-              
-                <span itemprop="name">RxJava 四、背压</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-19T19:27:12+08:00"
-              content="2017-09-19" >
-          09-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/framework/" rel="tag"># framework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/24/蓝牙开发-传统蓝牙API的使用一、-启用，发现，查找设备/" rel="next" title="蓝牙开发  传统蓝牙API的使用一、(启用，发现，查找设备)">
+                <i class="fa fa-chevron-left"></i> 蓝牙开发  传统蓝牙API的使用一、(启用，发现，查找设备)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/13/framework笔记二-源码结构、Android-mk/" rel="prev" title="framework笔记二 源码结构、Android.mk">
+                framework笔记二 源码结构、Android.mk <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2017/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -710,6 +655,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
 
         </div>
         
@@ -730,8 +681,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -804,6 +764,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译过程"><span class="nav-number">1.</span> <span class="nav-text">编译过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-source-build-envsetup-sh"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. source build/envsetup.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-lunch"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. lunch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-make"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. make</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#make缺省编译目标是droid"><span class="nav-number">1.0.4.</span> <span class="nav-text">make缺省编译目标是droid.</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-的产品配置文件"><span class="nav-number">1.1.</span> <span class="nav-text">Android 的产品配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如果用户想个性定制自己的产品，应该有以下流程："><span class="nav-number">1.1.1.</span> <span class="nav-text">如果用户想个性定制自己的产品，应该有以下流程：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -962,6 +938,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2144806"></script>
+      <!-- UY END -->
     
   
 
