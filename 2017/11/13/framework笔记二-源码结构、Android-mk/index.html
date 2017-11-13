@@ -96,19 +96,19 @@
 
 
 
-<meta name="description" content="源码结构 Android.mk分析一个典型文件: package/apps/Settings目录下的Android.mk：12345678910111213141516171819202122232425262728LOCAL_PATH:= $(call my-dir)             //设置LOCAL_PATH为当前目录include $(CLEAR_VARS)">
+<meta name="description" content="源码结构 Android.mk分析一个典型文件: package/apps/Settings目录下的Android.mk：">
 <meta name="keywords" content="Android,framework">
 <meta property="og:type" content="article">
 <meta property="og:title" content="framework笔记二 源码结构、Android.mk">
 <meta property="og:url" content="http://chenzd.cn/2017/11/13/framework笔记二-源码结构、Android-mk/index.html">
 <meta property="og:site_name" content="陈在冬的博客">
-<meta property="og:description" content="源码结构 Android.mk分析一个典型文件: package/apps/Settings目录下的Android.mk：12345678910111213141516171819202122232425262728LOCAL_PATH:= $(call my-dir)             //设置LOCAL_PATH为当前目录include $(CLEAR_VARS)">
+<meta property="og:description" content="源码结构 Android.mk分析一个典型文件: package/apps/Settings目录下的Android.mk：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png">
-<meta property="og:updated_time" content="2017-11-13T04:22:55.044Z">
+<meta property="og:updated_time" content="2017-11-13T04:26:07.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="framework笔记二 源码结构、Android.mk">
-<meta name="twitter:description" content="源码结构 Android.mk分析一个典型文件: package/apps/Settings目录下的Android.mk：12345678910111213141516171819202122232425262728LOCAL_PATH:= $(call my-dir)             //设置LOCAL_PATH为当前目录include $(CLEAR_VARS)">
+<meta name="twitter:description" content="源码结构 Android.mk分析一个典型文件: package/apps/Settings目录下的Android.mk：">
 <meta name="twitter:image" content="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png">
 
 
@@ -428,7 +428,9 @@
 
       
         <h3 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h3><p><img src="http://osgun3ytd.bkt.clouddn.com/android%E6%A1%86%E6%9E%B6%E7%BB%93%E6%9E%84.png" alt="框架结构"></p>
-<h3 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h3><p>分析一个典型文件: package/apps/Settings目录下的Android.mk：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">LOCAL_PATH:= $(call my-dir)             //设置LOCAL_PATH为当前目录</div><div class="line">include $(CLEAR_VARS)                   //清空除LCAL_PATH外所有"LOCAL_"变量</div><div class="line"></div><div class="line">LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt telephony-common //指定依赖的共享Java类库</div><div class="line">LOCAL_STATIC_JAVA_LIBRARIES := android-support-v4 android-support-v13 jsr305    //指定依赖的静态Java类库</div><div class="line"></div><div class="line">LOCAL_MODULE_TAGS := optional           //定义模块的标签为optional</div><div class="line"></div><div class="line">LOCAL_SRC_FILES := \                    //定义源文件列表</div><div class="line">        $(call all-java-files-under, src) \</div><div class="line">        src/com/android/settings/EventLogTags.logtags</div><div class="line"></div><div class="line">LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res     </div><div class="line"></div><div class="line">LOCAL_PACKAGE_NAME := Settings          //指定模块名称</div><div class="line">LOCAL_CERTIFICATE := platform           //指定模块签名使用paltform签名</div><div class="line">LOCAL_PRIVILEGED_MODULE := true         //true表示此apk将安装到priv-app下，Android4.4新标志</div><div class="line"></div><div class="line">LOCAL_PROGUARD_FLAG_FILES := proguard.flags     //指定混淆的标志</div><div class="line"></div><div class="line">include frameworks/opt/setupwizard/navigationbar/common.mk      </div><div class="line"></div><div class="line">include $(BUILD_PACKAGE)                //指定编译模块的类型为APK</div><div class="line"></div><div class="line"><span class="meta">#</span> Use the following include to make our test apk.       </div><div class="line">ifeq (,$(ONE_SHOT_MAKEFILE))</div><div class="line">include $(call all-makefiles-under,$(LOCAL_PATH))  //将源码目录下其余的Android.mk都包含进</div><div class="line">endif</div></pre></td></tr></table></figure></p>
+<h3 id="Android-mk"><a href="#Android-mk" class="headerlink" title="Android.mk"></a>Android.mk</h3><p>分析一个典型文件: package/apps/Settings目录下的Android.mk：</p>
+<a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">LOCAL_PATH:= $(call my-dir)             //设置LOCAL_PATH为当前目录</div><div class="line">include $(CLEAR_VARS)                   //清空除LCAL_PATH外所有"LOCAL_"变量</div><div class="line"></div><div class="line">LOCAL_JAVA_LIBRARIES := bouncycastle conscrypt telephony-common //指定依赖的共享Java类库</div><div class="line">LOCAL_STATIC_JAVA_LIBRARIES := android-support-v4 android-support-v13 jsr305    //指定依赖的静态Java类库</div><div class="line"></div><div class="line">LOCAL_MODULE_TAGS := optional           //定义模块的标签为optional</div><div class="line"></div><div class="line">LOCAL_SRC_FILES := \                    //定义源文件列表</div><div class="line">        $(call all-java-files-under, src) \</div><div class="line">        src/com/android/settings/EventLogTags.logtags</div><div class="line"></div><div class="line">LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res     </div><div class="line"></div><div class="line">LOCAL_PACKAGE_NAME := Settings          //指定模块名称</div><div class="line">LOCAL_CERTIFICATE := platform           //指定模块签名使用paltform签名</div><div class="line">LOCAL_PRIVILEGED_MODULE := true         //true表示此apk将安装到priv-app下，Android4.4新标志</div><div class="line"></div><div class="line">LOCAL_PROGUARD_FLAG_FILES := proguard.flags     //指定混淆的标志</div><div class="line"></div><div class="line">include frameworks/opt/setupwizard/navigationbar/common.mk      </div><div class="line"></div><div class="line">include $(BUILD_PACKAGE)                //指定编译模块的类型为APK</div><div class="line"></div><div class="line"><span class="meta">#</span> Use the following include to make our test apk.       </div><div class="line">ifeq (,$(ONE_SHOT_MAKEFILE))</div><div class="line">include $(call all-makefiles-under,$(LOCAL_PATH))  //将源码目录下其余的Android.mk都包含进</div><div class="line">endif</div></pre></td></tr></table></figure>
 <p> 基本：</p>
 <ol>
 <li>LOCAL_PATH := $(call my-dir)   定义了当前模块的相对路径</li>
@@ -612,7 +614,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -623,7 +625,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -634,7 +636,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
