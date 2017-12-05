@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[设计模式： 单例模式]]></title>
+    <url>%2F2017%2F12%2F05%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[单例模式1. 懒汉式12345678910public class Singleton&#123; private static Singleton instance; private Singleton()&#123;&#125; public static synchronized Singleton getInstance()&#123; if(instance == null)&#123; instance = new Singleton(); &#125; return instance; &#125;&#125; 懒汉式单例模式的优点是单例模式只有在使用时才会被实例化，在一定程度上节约了资源，缺单是在第一次加载时需要及时进行同步，造成不必要的同步开销。一般不建议使用 2. DoubleCheckLock(DCL)实现单例123456789101112131415161718public class Singleton&#123; private static Singleton sInstance = null; private Singleton()&#123;&#125; public void doSonmething()&#123; //... &#125; public static Singleton getInstance()&#123; if(mInstance == null)&#123; synchronized(Singleton.class)&#123; if(mInstance == null)&#123; mInstance = new Singleton(); &#125; &#125; &#125; return mInstance; &#125; &#125; 这种模式由于Java编译器允许处理器乱序执行的原因，可能会导致DCL失效，在JDK1.5及之后，添加了volatile关键字，只需将mInstance的定义改成private volatile static Singleton sInstance = null就保证对象每次都是从主内存中读取，就可以使用DCL的写法来完成单例模式。 优点：资源利用率高，第一次执行getInstance时单例对象才会被实例化，效率高。 缺点：第一次加载时反应慢，也由于java内存模型的原因偶尔会失败。在高并发环境下也有一定的缺陷，虽然发生概率小。 3. 静态内部类单例模式123456789101112public class Singleton&#123; private Singleton()&#123;&#125; public static Singleton getInstance()&#123; return SingletonHolder.sInstatnce; &#125; /** * 静态内部类 */ private static class SingetonHolder&#123; private static final Singleton sInstatnce = new Singleton(); &#125;&#125; 第一次调用getInstance方法导致虚拟机加载SingletonHolder类，这种方式不仅能够确保线程安全，也能够保证单例对象的唯一性，同时也延迟了单例的实例化，推荐使用的单例模式实现方式 4. 枚举单例123456public enum SingletonEnum&#123; INSTANCE; public void doSometing()&#123; //... &#125;&#125; 默认枚举实例的创建是线程安全的，并且在任何情况下它都是一个单例 5. 使用容器实现单例模式12345678910111213public class SingletonManger&#123; private static Map&lt;String,Object&gt; objMap = new HashMap&lt;String,Object&gt;(); private SingletonManger()&#123;&#125; public static void registerService(String key,Object instance)&#123; if(!objMap.containsKey(key))&#123; objMap.put(key,instance); &#125; &#125; public static Object getService(String key)&#123; return objMap.get(key); &#125;&#125;]]></content>
+      <categories>
+        <category>Android</category>
+        <category>Android 学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[面向对象六大原则]]></title>
     <url>%2F2017%2F12%2F05%2F%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99%2F</url>
     <content type="text"><![CDATA[1.单一责任原则单一职责所表达出的永远hi就是单一二字。如何划分一个类、一个函数的职责，每个人都有自己的看法，需要根据个人经验、具体的业务逻辑而定。但是也有一些基本的原则，例如，两个完全不一样的功能不应该放在一个类中，一个类中应该有一组相关性很高的函数、数据的封装。 2. 开闭原则软件中的对象(类、模块、函数等)应该对于扩展是开放的，但是，对于修改应该是关闭的。当软件需要变化时，我们应该尽量通过扩展的方式来实现变化，而不是通过修改已有的代码来实现。 3. 里氏替换原则所有应用基类的地方必须能透明地使用其子类的对象。里氏替换原则就是依赖于继承、多态这两大原则。通俗点讲，只要父类能出现的地方，子类就可以出现，而且替换为子类也不会产生任何错误或异常，使用者可能根部就不需要知道是父类还是子类。但是反过来就不行了，有子类出现的地方，父类未必就能适应。主要就是抽象12345678910111213141516171819202122232425262728//窗口类public class Window&#123; public void show(View child)&#123; child.draw(); &#125;&#125;//建立视图抽象，测量视图的宽高为公共代码，绘制实现交给具体的子类public abstract class View&#123; public abstract void draw(); public void measure(int width,int height)&#123; //测绘视图大小 &#125;&#125;//文本控制类的具体实现public class TextView extends View&#123; public void draw()&#123; //绘制文本 &#125;&#125;//ImageView的具体实现public class ImageView extends View&#123; public void draw()&#123; //绘制图片 &#125;&#125; 4. 依赖倒置原则指代了一种特定的借偶形式，使得高层的模块不依赖与低层次模块的实现细节。可以概括：面向接口编程，或者说是面向抽象编程，这里的抽象指的就是接口或者抽象类。 5. 接口隔离原则客户端不应该依赖它不需要的接口，或者说，类间的依赖关系应该建立在最小的接口上。 6. 迪米特原则一个对象应该对其他对象有最少的了解。既一个类应该对自己需要耦合或调用的类知道最少，类的内部如何实现与调用者或者依赖者没有关系，调用者或者依赖者只需要知道它需要的方法即可，其他的可一概不管。类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大]]></content>
