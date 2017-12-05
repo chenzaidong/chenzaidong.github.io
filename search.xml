@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[面向对象六大原则]]></title>
+    <url>%2F2017%2F12%2F05%2F%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99%2F</url>
+    <content type="text"><![CDATA[1.单一责任原则单一职责所表达出的永远hi就是单一二字。如何划分一个类、一个函数的职责，每个人都有自己的看法，需要根据个人经验、具体的业务逻辑而定。但是也有一些基本的原则，例如，两个完全不一样的功能不应该放在一个类中，一个类中应该有一组相关性很高的函数、数据的封装。 2. 开闭原则软件中的对象(类、模块、函数等)应该对于扩展是开放的，但是，对于修改应该是关闭的。当软件需要变化时，我们应该尽量通过扩展的方式来实现变化，而不是通过修改已有的代码来实现。 3. 里氏替换原则所有应用基类的地方必须能透明地使用其子类的对象。里氏替换原则就是依赖于继承、多态这两大原则。通俗点讲，只要父类能出现的地方，子类就可以出现，而且替换为子类也不会产生任何错误或异常，使用者可能根部就不需要知道是父类还是子类。但是反过来就不行了，有子类出现的地方，父类未必就能适应。主要就是抽象12345678910111213141516171819202122232425262728//窗口类public class Window&#123; public void show(View child)&#123; child.draw(); &#125;&#125;//建立视图抽象，测量视图的宽高为公共代码，绘制实现交给具体的子类public abstract class View&#123; public abstract void draw(); public void measure(int width,int height)&#123; //测绘视图大小 &#125;&#125;//文本控制类的具体实现public class TextView extends View&#123; public void draw()&#123; //绘制文本 &#125;&#125;//ImageView的具体实现public class ImageView extends View&#123; public void draw()&#123; //绘制图片 &#125;&#125; 4. 依赖倒置原则指代了一种特定的借偶形式，使得高层的模块不依赖与低层次模块的实现细节。可以概括：面向接口编程，或者说是面向抽象编程，这里的抽象指的就是接口或者抽象类。 5. 接口隔离原则客户端不应该依赖它不需要的接口，或者说，类间的依赖关系应该建立在最小的接口上。 6. 迪米特原则一个对象应该对其他对象有最少的了解。既一个类应该对自己需要耦合或调用的类知道最少，类的内部如何实现与调用者或者依赖者没有关系，调用者或者依赖者只需要知道它需要的方法即可，其他的可一概不管。类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大]]></content>
+      <categories>
+        <category>Android</category>
+        <category>Android 学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubuntu记录]]></title>
     <url>%2F2017%2F11%2F13%2Fubuntu%E8%AE%B0%E5%BD%95%2F</url>
     <content type="text"><![CDATA[1. 创建桌面应用图标在终端输入以下命令:1sudo gedit /usr/share/applications/AndroidStudio.desktop 在打开的文档中添加下面的内容：12345678[Desktop Entry]Name=Android StudioComment=android studioExec=/home/czd/soft/android-studio/bin/studio.shIcon=/home/czd/soft/android-studio/bin/studio.pngTerminal=falseType=ApplicationCategories=Application 保存、关闭后，会在/usr/share/applications中看到Android Studio的快捷方式，复制到桌面双击图标就可使用了打开application文件夹:1sudo nautilus /usr/share/applications 需要注意的是，每一行必须紧靠左侧且每行最后面不能有空格，否则会失败 Exec代表应用程序的位置【视实际情况修改】 Icon代表应用程序图标的位置【视实际情况修改】 Terminal的值为false表示启动时不启动命令行窗口，值为true表示启动命令行窗口【建议为false】 Categories这里的内容决定创建出的起动器在应用程序菜单中的位置，按照上面的写法创建的起动器将出现在应用程序－Internet中，以此类推，如果想在应用程序－办公中创建起动器，上述最后一行应该写成：Categories=Application;Office; 2. 下载repocurl “http://php.webtutor.pl/en/wp-content/uploads/2011/09/repo“ &gt; ~/bin/repo 3. androidstudio中启动emulator闪退的问题1234567891017-11-3下午5:17 Emulator: context mismatch in svga_sampler_view_destroy下午5:17 Emulator: context mismatch in svga_sampler_view_destroy下午5:17 Emulator: VMware: vmw_ioctl_command error 无效的参数.下午5:17 ADB rejected shell command (getprop): closed下午5:17 Emulator: Process finished with exit code 134 (interrupted by signal 6: SIGABRT) 打开1~/.android/avd/模拟器名称&lt;&gt;/config.ini 方法一：修改为12hw.gpu.enabled=nohw.gpu.mode=mesa 方法二：修改为12hw.gpu.enabled=nohw.gpu.mode=swiftshader 4.模拟器无法启动1sudo apt-get install lib64stdc++6 进入/emulator/lib64 文件夹,备份已有的libstdc++.so.6 文件123mv libstdc++.so.6 libstdc++.so.6.bakln -s /usr/lib64/libstdc++.so.6 &lt;sdk目录&gt;/emulator/lib64/libstdc++ 最后启动模拟器 ok 搞定。]]></content>
